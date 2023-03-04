@@ -1,0 +1,12 @@
+/** Defines the theme variables for the application. */
+:root {
+  --primary: #1976d2;
+  --accent: #d32f2f;
+  --warn: #f44336;
+  --background: #fafafa;
+
+  --primary-contrast: #fff;
+  --accent-contrast: #fff;
+  --warn-contrast: #fff;
+  --background-contrast: #000;
+}

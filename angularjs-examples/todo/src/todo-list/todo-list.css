@@ -1,0 +1,43 @@
+.todoList {
+    display: block;
+    padding: 1vw;
+    margin: 1vw;
+    list-style: none;
+
+    color: var(--primary);
+
+    border: 1px solid var(--accent);
+}
+
+.todoList .todList__items {
+    display: block;
+    padding: 1vw;
+    margin: 1vw;
+    list-style: none;
+}
+
+.todoList .todList__items li {
+    display: flex;
+    padding: 1vw;
+    margin: 1vw;
+    list-style: none;
+    color: var(--primary-contrast);
+    background-color: var(--primary);
+    justify-content: space-between;
+    
+}
+
+.todList__items .todList__deleteItemBtn {
+    /* background-color: unset; */
+    /* border: none; */ 
+}
+
+
+.todList__items .todList__deleteItemBtn i {
+    color: var(--warn);
+    font-size: large;
+}
+
+.todList__items .todList__addItemBtn {
+   
+}
