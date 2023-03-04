@@ -29,5 +29,8 @@
   },
   "overrides": {
     "typescript": "$typescript"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.21"
   }
 }
