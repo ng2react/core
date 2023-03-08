@@ -1,0 +1,43 @@
+{
+  "name": "@maxbilbow/angularjs2react",
+  "version": "1.0.0",
+  "description": "## Related projects to Investigate * [react-in-angularjs](https://github.com/xjpro/react-in-angularjs)",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c rollup.config.js",
+    "dev": "rollup -c rollup.config.js --watch",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxbilbow/angularjs2react.git"
+  },
+  "author": "Max Bilbow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxbilbow/angularjs2react/issues"
+  },
+  "homepage": "https://github.com/maxbilbow/angularjs2react#readme",
+  "peerDependencies": {
+    "typescript": "^5.0.1-rc"
+  },
+  "overrides": {
+    "typescript": "$typescript"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.21.0",
+    "@babel/register": "^7.21.0",
+    "@jest/globals": "^29.5.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.14.6",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "rollup": "^3.18.0"
+  }
+}

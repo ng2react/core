@@ -1,7 +1,7 @@
 import angular from "angular";
 import './todo-list/todo-list-service.js'
 import './app.css'
-import { angularize } from "./angularise.cjs";
+import { angularize } from "react-in-angularjs";
 import TodoList from "./todo-list/todo-list.jsx";
 
 angularize(TodoList, "todoList", angular.module("todoList", []), {

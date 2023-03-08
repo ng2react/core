@@ -1,0 +1,5 @@
+extension:
+  - ts
+  - mts
+spec: ./src/test/**/*.spec.ts
+require: ./src/test/babel-register.cjs

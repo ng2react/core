@@ -1,0 +1,12 @@
+{
+    "extends": "../../tsconfig.generic.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "allowImportingTsExtensions": true
+    },
+    "references": [
+        {
+            "path": "../lib"
+        }
+    ]
+}

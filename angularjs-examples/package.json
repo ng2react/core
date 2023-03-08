@@ -5,6 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc --build ./src/lib/tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

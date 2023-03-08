@@ -13,7 +13,8 @@
   "license": "ISC",
   "peerDependencies": {
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react-dom": ">=18.0.0",
+    "react-in-angularjs": "file:../../../react-in-angularjs"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.18.6",
