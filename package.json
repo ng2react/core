@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/maxbilbow/angularjs2react#readme",
   "peerDependencies": {
+    "esprima": "4.0.1",
     "typescript": "^5.0.1-rc"
   },
   "overrides": {
@@ -34,10 +35,17 @@
     "@jest/globals": "^29.5.0",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/chai": "^4.3.4",
+    "@types/esprima": "^4.0.3",
+    "@types/estree": "^1.0.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.14.6",
     "chai": "^4.3.7",
     "mocha": "^10.2.0",
-    "rollup": "^3.18.0"
-  }
+    "rollup": "^3.18.0",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^9.0.0"
+  },
+  "bin": "dist/bin/cli.mjs"
 }

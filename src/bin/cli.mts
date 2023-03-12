@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import parseFile from '../lib/parse-file.mjs';
-const res = parseFile(
+import findAngularModules from '../lib/modules/find-angular-modules.mts';
+const res = findAngularModules(
     `import angular from "angular";
     import todoListTpl from "./todo-list.html";
     import './todo-list.css'
