@@ -1,6 +1,7 @@
-import angular from "angular";
-import todoListTpl from "./todo-list.html";
+import angular from 'angular';
+import tpl from './componentWithImportedTemplate.tpl.html';
 import './todo-list.css'
+import todoListTpl from './todo-list.html';
 
 class TodoListCtrl {
     constructor() {
@@ -39,8 +40,26 @@ const componentOnConstModuleConstName = angular.moodule('componentOnConstModuleM
 
 componentOnConstModuleConstName.component('componentOnConstModule',  {
     controller: TodoListCtrl,
-    template: todoListTpl,
     bindings: {
         items: '<',
     }
 })
+
+
+angular.module('componentWithInlineTemplateModule', [])
+    .component('componentWithInlineTemplate', {
+        template: '<div>Inline template</div>'
+    })
+
+
+angular.module('componentWithTemplateUrlModule', [])
+    .component('componentWithTemplateUrl', {
+        templateUrl: 'componentWithTemplateUrl.tpl.html'
+    })
+
+
+angular.module('componentWithUrlImportedTemplateModule', [])
+    .component('componentWithUrlImportedTemplate', {
+        template: tpl
+    });
+
