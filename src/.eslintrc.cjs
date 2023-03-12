@@ -8,7 +8,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
   },
   root: true,
-  ignorePatterns: ['node_modules', 'dist', 'coverage', '.eslintrc.cjs'],
+  ignorePatterns: ['node_modules', 'dist', 'coverage', '.eslintrc.cjs', 'templates'],
   rules: {
     quotes: ['error', 'single'],
     'semi': ['error', 'never'],

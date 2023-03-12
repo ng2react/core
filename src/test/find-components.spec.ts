@@ -1,20 +1,18 @@
 import {expect} from 'chai'
 import {describe, it} from 'mocha'
-import {AngularComponent, InlineTemplate} from '../lib/model/AngularEntity.ts'
-import findComponentsInModule from '../lib/modules/find-components.mts'
+import type {AngularComponent, InlineTemplate} from '../lib/model/AngularEntity.ts'
+import findComponentsInModule from '../lib/modules/find-components.ts'
 import {MultipleComponents} from './test-data.ts'
 
-const content = MultipleComponents.content
-const COMPONENT_COUNT = MultipleComponents.componentsCount
 describe('Given an array of angular modules When findComponents is called', () => {
 
     let components: AngularComponent[]
     const getComponent = (name: string) => components.find(c => c.name === name)
     before(() => {
-        components = findComponentsInModule(content)
+        components = findComponentsInModule(MultipleComponents.path)
     })
     it('Then all modules are found', () => {
-        expect(components).to.have.lengthOf(COMPONENT_COUNT)
+        expect(components).to.have.lengthOf(MultipleComponents.componentsCount)
     })
 
     it('Then all module names are correct', () => {

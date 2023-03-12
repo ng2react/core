@@ -1,22 +1,20 @@
-import {CallExpression, createSourceFile, isStringTextContainingNode, Node, ScriptTarget} from "typescript";
-import {AngularComponent} from "../model/AngularEntity.ts";
-import findModule from "./find-module.mts";
-import findTemplate from "./find-template.mts";
-import isDeclarationOf from "./is-deculation-of.mts";
-import {Logger} from "tslog";
+import {type CallExpression, isStringTextContainingNode, type Node} from 'typescript'
+import type {AngularComponent} from '../model/AngularEntity.ts'
+import findModule from './find-module.ts'
+import findTemplate from './find-template.ts'
+import isDeclarationOf from './is-deculation-of.ts'
+import {Logger} from 'tslog'
+import createAst from './create-ast.ts'
 
 const logger = new Logger<void>({name: 'find-components'})
-export default function findComponents(source: Node | string) {
-    let node: Node
-    if (typeof source === 'string') {
-        node = createSourceFile('test.ts', source, ScriptTarget.Latest, true);
-    } else {
-        node = source
+export default function findComponents(node: Node | string): AngularComponent[] {
+    if (typeof node === 'string') {
+        node = createAst(node)
     }
-    let components: AngularComponent[] = [];
+    const components: AngularComponent[] = []
     node.forEachChild(childNode => {
         if (isDeclarationOf(childNode, 'component')) {
-            components.push(componentFrom(childNode));
+            components.push(componentFrom(childNode))
         } else {
             components.push(...findComponents(childNode))
         }

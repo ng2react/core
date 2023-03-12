@@ -1,5 +1,9 @@
 extension:
-  - ts
-  - mts
+  - js
+  - mjs
+  - cjs
 spec: ./src/test/**/*.spec.ts
 require: ./src/test/babel-register.cjs
+#node-option:
+#  - "experimental-specifier-resolution=node"
+#  - "loader=ts-node/esm"

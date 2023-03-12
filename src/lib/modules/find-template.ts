@@ -1,6 +1,6 @@
-import {Expression, isObjectLiteralExpression, isStringTextContainingNode, ObjectLiteralElementLike} from "typescript";
-import {AngularTemplate, InlineTemplate, UnresolvedUrlTemplate, UrlTemplate} from "../model/AngularEntity.ts";
-import {Logger} from "tslog";
+import {type Expression, isObjectLiteralExpression, isStringTextContainingNode, type ObjectLiteralElementLike} from 'typescript'
+import type {AngularTemplate, InlineTemplate, UnresolvedUrlTemplate} from '../model/AngularEntity.ts'
+import {Logger} from 'tslog'
 
 const logger = new Logger<void>({name: 'find-template'})
 
@@ -46,7 +46,7 @@ function getTemplateFromUrl(property: ObjectLiteralElementLike): UnresolvedUrlTe
 }
 
 function getStringValue(property: ObjectLiteralElementLike) {
-    if (!("initializer" in property)) {
+    if (!('initializer' in property)) {
         throw Error('template property is not an initializer')
     }
     const value = property.initializer

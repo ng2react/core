@@ -2,6 +2,10 @@
     "extends":[
         "../../tsconfig.generic.json"
     ],
+    "compilerOptions": {
+        "outDir": "../../dist/esm/bin",
+        "declarationDir": "../../dist/types/bin",
+    },
     "references": [
         { "path": "../lib" }
     ]

@@ -21,6 +21,8 @@ export type InlineTemplate = Readonly<{
     resolution: 'inline'
     node: Node
     text: string
+    url?: never
+    error?: never
 }>
 
 export type UnresolvedUrlTemplate = Readonly<{
@@ -29,8 +31,10 @@ export type UnresolvedUrlTemplate = Readonly<{
     node: Node
     url: string,
     error?: Error
+    text?: never
 }>
 
 export type UrlTemplate = UnresolvedUrlTemplate & Readonly<{
     text: string
+    error?: never
 }>

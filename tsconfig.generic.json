@@ -1,14 +1,22 @@
 {
-     "compilerOptions": {
-        "lib": ["ESNext"],
-        "module": "NodeNext",
-        "target": "ES2022",
-        "outDir": "dist",
-        "moduleResolution": "nodenext",
-        "esModuleInterop": true,
-        "strict": true,
-        "skipLibCheck": true,
-        "allowSyntheticDefaultImports": true,
-        "allowImportingTsExtensions": true
-     }
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES2022",
+    //    "declarationDir": "dist/types",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "strict": true,
+    //    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "composite": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
+    "outDir": "dist/types"
+  },
+  "exclude": [
+    "src/templates"
+  ]
 }
