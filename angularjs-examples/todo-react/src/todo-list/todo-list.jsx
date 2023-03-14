@@ -1,7 +1,7 @@
 import React from "react";
 import "./todo-list.css";
 
-const TodoList = ({ items, onChange }) => {
+const TodoList = ({ items, setItems }) => {
 
   return (
     <div className="todoList">
@@ -43,12 +43,12 @@ const TodoList = ({ items, onChange }) => {
       items.push(newItem);
     }
     submitEvent.target.reset();
-    onChange()
+    setItems({items})
   }
 
   function onDeleteItem(index) {
     items.splice(index, 1);
-    onChange()
+    setItems({items})
   }
 };
 

@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     </head>
     <body ng-controller="AppCtrl">
-        <todo-list items="items" on-change="onChange()"></todo-list>
+        <todo-list items="items" set-items="setItems(items)"></todo-list>
+        <todo-list-ai items="items" set-items="setItems(items)"></todo-list-ai>
     </body>
 </html>
