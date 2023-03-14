@@ -2,7 +2,8 @@
     "extends": "../../tsconfig.generic.json",
     "compilerOptions": {
         "noEmit": true,
-//        "allowImportingTsExtensions": true
+        "moduleResolution": "node"
+        //        "allowImportingTsExtensions": true
 //        "moduleDetection": "auto",
 //        "moduleResolution": "Node",
 //        "module": "commonjs",

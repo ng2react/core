@@ -13,13 +13,12 @@ module.exports = (api) => {
             esm: {
                 ...shared,
                 presets: [['@babel/env', {
-                    modules: false,
-
+                    modules: false
                 }], ...sharedPresets],
                 plugins: [
                     ["replace-import-extension", {
                         "extMapping": {
-                            ".ts": ".js"
+                            ".ts": ""
                         }
                     }]
                 ]

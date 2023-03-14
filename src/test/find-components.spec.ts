@@ -1,8 +1,8 @@
 import {expect} from 'chai'
 import {describe, it} from 'mocha'
-import type {AngularComponent, InlineTemplate} from '../lib/model/AngularEntity.ts'
-import findComponentsInModule from '../lib/modules/find-components.ts'
-import {MultipleComponents} from './test-data.ts'
+import type {AngularComponent, InlineTemplate} from '../lib'
+import findComponentsInModule from '../lib/modules/find-components'
+import {MultipleComponents} from './test-data'
 
 describe('Given an array of angular modules When findComponents is called', () => {
 
