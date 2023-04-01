@@ -2,21 +2,16 @@
   "name": "@maxbilbow/angularjs2react",
   "version": "1.0.0-alpha",
   "description": "Convert AngularJS 1.x components to React components",
-  "type": "module",
-  "main": "./dist/cjs/lib/index.cjs",
-  "module": "./dist/esm/lib/index.js",
-  "types": "./dist/types/lib/index.d.ts",
+  "main": "./dist/lib/index.js",
+  "types": "./dist/types/index.d.ts",
   "exports": {
-    "require": "./dist/cjs/lib/index.cjs",
-    "import": "./dist/esm/lib/index.js",
-    "types": "./dist/types/lib/index.d.ts"
+    "require": "./dist/lib/index.js",
+    "import": "./dist/lib/index.js",
+    "types": "./dist/types/index.d.ts"
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "npm run build:types && npm run build:cjs && npm run build:esm",
-    "build:types": "tsc --build ./src/lib/tsconfig.json --emitDeclarationOnly",
-    "build:esm": "cross-env BABEL_ENV=esm babel src --extensions '.ts' --out-dir 'dist/esm' --source-maps",
-    "build:cjs": "cross-env BABEL_ENV=cjs babel src --extensions '.ts' --out-dir 'dist/cjs' --source-maps --out-file-extension .cjs",
+    "build": "tsc --build ./src/lib/tsconfig.json",
     "test": "cross-env BABEL_ENV=test mocha"
   },
   "repository": {
@@ -31,6 +26,7 @@
   "homepage": "https://github.com/maxbilbow/angularjs2react#readme",
   "dependencies": {
     "lodash": "^4.17.21",
+    "openai": "^3.2.1",
     "tslog": "^4.8.2",
     "typescript": "^5.0.1-rc",
     "yargs": "^17.7.1"

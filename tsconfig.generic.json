@@ -1,20 +1,17 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "commonjs",
     "target": "ES2022",
+    "outDir": "dist/lib",
     "declarationDir": "dist/types",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
     //    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "composite": true,
-    "verbatimModuleSyntax": true,
-    "allowImportingTsExtensions": true,
     "declaration": true,
-//    "emitDeclarationOnly": true,
-    "declarationMap": true,
-    "outDir": "dist/esm"
+    "declarationMap": true
   },
   "exclude": [
     "src/templates"

@@ -1,4 +1,3 @@
-export {default as createReactComponent} from './create-react-component.ts'
-export {default as findComponents} from './find-components.ts'
-export {default as resolveTemplates} from './resolve-template.ts'
-export {default as createAst} from './create-ast.ts'
+export {default as findComponents} from './find-components'
+export {default as resolveTemplates} from './resolve-template'
+export {default as createAst} from './create-ast'

@@ -1,1 +1,1 @@
-export * from './AngularEntity.ts'
+export * from './AngularEntity'

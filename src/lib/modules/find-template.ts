@@ -1,5 +1,5 @@
 import {type Expression, isObjectLiteralExpression, isStringTextContainingNode, type ObjectLiteralElementLike} from 'typescript'
-import type {AngularTemplate, InlineTemplate, UnresolvedUrlTemplate} from '../model/AngularEntity.ts'
+import type {AngularTemplate, InlineTemplate, UnresolvedUrlTemplate} from '../model/AngularEntity'
 import {Logger} from 'tslog'
 
 const logger = new Logger<void>({name: 'find-template'})

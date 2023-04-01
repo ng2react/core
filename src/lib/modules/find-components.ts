@@ -1,10 +1,10 @@
 import {type CallExpression, isStringTextContainingNode, type Node} from 'typescript'
-import type {AngularComponent} from '../model/AngularEntity.ts'
-import findModule from './find-module.ts'
-import findTemplate from './find-template.ts'
-import isDeclarationOf from './is-deculation-of.ts'
+import type {AngularComponent} from '../model/AngularEntity'
+import findModule from './find-module'
+import findTemplate from './find-template'
+import isDeclarationOf from './is-deculation-of'
 import {Logger} from 'tslog'
-import createAst from './create-ast.ts'
+import createAst from './create-ast'
 
 const logger = new Logger<void>({name: 'find-components'})
 export default function findComponents(node: Node | string): AngularComponent[] {

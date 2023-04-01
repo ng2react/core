@@ -1,7 +1,6 @@
 {
-    "extends": "../../tsconfig.generic.json",
-    "compilerOptions": {
-        "outDir": "../../dist/esm/lib",
-        "declarationDir": "../../dist/types/lib"
-    },
+  "extends": "../../tsconfig.generic.json",
+  "compilerOptions": {
+
+  }
 }

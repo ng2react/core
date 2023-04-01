@@ -1,4 +1,4 @@
-import type {AngularComponent, UnresolvedUrlTemplate, UrlTemplate} from '../model/AngularEntity.ts'
+import type {AngularComponent, UnresolvedUrlTemplate, UrlTemplate} from '../model/AngularEntity'
 import path from 'path'
 import fs from 'fs'
 

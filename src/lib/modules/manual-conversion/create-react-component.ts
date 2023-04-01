@@ -1,8 +1,8 @@
-import type {AngularComponent} from '../model/AngularEntity.ts'
-import {getSourceDir} from './ast-utils.ts'
+import type {AngularComponent} from '../../model/AngularEntity'
+import {getSourceDir} from '../ast-utils'
 import path from 'path'
 import fs from 'fs'
-import {TEMPLATE_DIR} from '../constants.ts'
+import {TEMPLATE_DIR} from '../../constants'
 import {startCase} from 'lodash'
 import {createSourceFile, ScriptTarget} from 'typescript'
 

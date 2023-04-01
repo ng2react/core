@@ -1,6 +1,6 @@
 import { type CallExpression, type Node, isExpressionStatement, isStringTextContainingNode } from 'typescript'
-import type { AngularModule } from '../model/AngularEntity.ts'
-import isDeclarationOf from './is-deculation-of.ts'
+import type { AngularModule } from '../model/AngularEntity'
+import isDeclarationOf from './is-deculation-of'
 
 export default function findModule(node: Node): AngularModule | undefined {
     const moduleNode = findModuleNode(node)

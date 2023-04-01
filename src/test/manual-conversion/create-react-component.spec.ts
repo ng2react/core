@@ -1,9 +1,9 @@
 import {describe, it} from 'mocha'
-import findComponentsInModule from '../lib/modules/find-components'
-import {TodoList} from './test-data'
-import createReactComponent from '../lib/modules/create-react-component'
+import findComponentsInModule from '../../lib/modules/find-components'
+import {TodoList} from '../test-data'
+import createReactComponent from '../../lib/modules/manual-conversion/create-react-component'
 import type {SourceFile} from 'typescript'
-import resolveTemplates from '../lib/modules/resolve-template'
+import resolveTemplates from '../../lib/modules/resolve-template'
 import {expect} from 'chai'
 
 describe('Given a successfully analysed angular component When createReactComponent is called', () => {

@@ -1,2 +1,2 @@
-export * from './modules/main.ts'
-export * from './model/main.ts'
+export * from './modules/main'
+export * from './model/main'

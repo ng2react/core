@@ -1,6 +1,8 @@
 import path from 'path'
 import fs from 'fs'
 
+export const TEST_DATA_DIR = path.resolve(__dirname, 'test_data')
+
 export class MultipleComponents {
     static readonly path = path.resolve(__dirname, 'test_data/components.js')
     static readonly content = fs.readFileSync(MultipleComponents.path, 'utf-8')
@@ -9,5 +11,4 @@ export class MultipleComponents {
 
 export class TodoList {
     static readonly path = path.resolve(__dirname, 'test_data/todo-list.js')
-
 }
