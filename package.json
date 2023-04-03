@@ -10,6 +10,10 @@
     "import": "./dist/esm/index.js",
     "types": "./dist/types/index.d.ts"
   },
+  "files": [
+    "dist",
+    "src/lib"
+  ],
   "scripts": {
     "preversion": "npm run lint && npm run test && npm run build",
     "prepublishOnly": "npm run build",
