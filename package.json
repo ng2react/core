@@ -1,34 +1,37 @@
 {
-  "name": "@maxbilbow/angularjs2react",
-  "version": "1.0.0-alpha",
+  "name": "@ng2react/core",
+  "version": "0.0.0-alpha",
   "description": "Convert AngularJS 1.x components to React components",
-  "main": "./dist/lib/index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
-    "require": "./dist/lib/index.js",
-    "import": "./dist/lib/index.js",
+    "require": "./dist/cjs/index.js",
+    "import": "./dist/esm/index.js",
     "types": "./dist/types/index.d.ts"
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc --build ./src/lib/tsconfig.json",
-    "test": "cross-env BABEL_ENV=test mocha"
+    "build": "npm run build-cjs && npm run build-esm",
+    "build-esm": "tsc --build ./src/lib/tsconfig.json",
+    "build-cjs": "tsc --build ./src/lib/tsconfig.cjs.json",
+    "test": "cross-env mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maxbilbow/angularjs2react.git"
+    "url": "git+https://github.com/maxbilbow/ng2react-core.git"
   },
   "author": "Max Bilbow",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/maxbilbow/angularjs2react/issues"
+    "url": "https://github.com/maxbilbow/ng2react-core/issues"
   },
-  "homepage": "https://github.com/maxbilbow/angularjs2react#readme",
+  "homepage": "https://github.com/maxbilbow/ng2react-core#readme",
   "dependencies": {
     "lodash": "^4.17.21",
     "openai": "^3.2.1",
     "tslog": "^4.8.2",
-    "typescript": "^5.0.1-rc",
+    "typescript": "^5.0.2",
     "yargs": "^17.7.1"
   },
   "overrides": {
