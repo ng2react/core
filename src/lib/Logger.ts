@@ -13,10 +13,10 @@ let logLevel = (() => {
 export function setLogLevel(level: 'quiet' | 'verbose' | 'normal') {
     switch (level) {
         case 'quiet':
-            logLevel = 0
+            logLevel = 5
             break
         case 'verbose':
-            logLevel = 5
+            logLevel = 0
             break
         case 'normal':
             logLevel = 3
