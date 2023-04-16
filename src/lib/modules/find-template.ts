@@ -1,8 +1,10 @@
-import {type Expression, isObjectLiteralExpression, isStringTextContainingNode, type ObjectLiteralElementLike} from 'typescript'
+import {
+    type Expression,
+    isObjectLiteralExpression,
+    isStringTextContainingNode,
+    type ObjectLiteralElementLike
+} from 'typescript'
 import type {AngularTemplate, InlineTemplate, UnresolvedUrlTemplate} from '../model/AngularEntity'
-import {Logger} from 'tslog'
-
-const logger = new Logger<void>({name: 'find-template'})
 
 /**
  * Takes the second argument of an angularjs component declaration and returns the template

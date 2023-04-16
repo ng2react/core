@@ -3,10 +3,10 @@ import type {AngularComponent} from '../model/AngularEntity'
 import findModule from './find-module'
 import findTemplate from './find-template'
 import isDeclarationOf from './is-deculation-of'
-import {Logger} from 'tslog'
 import createAst from './create-ast'
+import getLogger from '../Logger'
 
-const logger = new Logger<void>({name: 'find-components'})
+const logger = getLogger('find-components')
 export default function findComponents(node: Node | string): AngularComponent[] {
     if (typeof node === 'string') {
         node = createAst(node)
