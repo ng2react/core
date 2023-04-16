@@ -6,8 +6,9 @@ import isDeclarationOf from './is-deculation-of'
 import createAst from './create-ast'
 import getLogger from '../Logger'
 
-const logger = getLogger('find-components')
 export default function findComponents(node: Node | string): AngularComponent[] {
+    const logger = getLogger('find-components')
+
     if (typeof node === 'string') {
         node = createAst(node)
     }
@@ -20,22 +21,23 @@ export default function findComponents(node: Node | string): AngularComponent[] 
         }
     })
     return components
-}
 
-function componentFrom(node: CallExpression): AngularComponent {
-    const [arg1, arg2] = node.arguments
-    let template: AngularComponent['template']
-    try {
-        template = findTemplate(arg2)
-    } catch (e) {
-        const err = e as Error
-        logger.warn(err.message)
-    }
-    return {
-        type: 'component',
-        name: isStringTextContainingNode(arg1) ? arg1.text : 'unknown',
-        node,
-        module: findModule(node),
-        template
+
+    function componentFrom(node: CallExpression): AngularComponent {
+        const [arg1, arg2] = node.arguments
+        let template: AngularComponent['template']
+        try {
+            template = findTemplate(arg2)
+        } catch (e) {
+            const err = e as Error
+            logger.warn(err.message)
+        }
+        return {
+            type: 'component',
+            name: isStringTextContainingNode(arg1) ? arg1.text : 'unknown',
+            node,
+            module: findModule(node),
+            template
+        }
     }
 }
