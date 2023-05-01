@@ -57,9 +57,23 @@ angular.module('componentWithTemplateUrlModule', [])
         templateUrl: 'componentWithTemplateUrl.tpl.html'
     })
 
+angular.module('componentWithUnmappedTemplateUrlModule', [])
+    .component('componentWithUnmappedTemplateUrl', {
+        templateUrl: 'some-obscure-prefix/componentWithUnmappedTemplateUrl.tpl.html'
+    })
+
 
 angular.module('componentWithUrlImportedTemplateModule', [])
     .component('componentWithUrlImportedTemplate', {
         template: tpl
     });
+
+
+angular.module('componentWithRequiredTemplateModule', [])
+    .component('componentWithRequiredTemplate', {
+        template: require('./componentWithRequiredTemplate.tpl.html')
+    });
+
+angular.module('componentWithNoTemplateModule', [])
+    .component('componentWithNoTemplate', {});
 

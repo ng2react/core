@@ -14,7 +14,8 @@ export default function resolveTemplateUrl({filePath, templateUrl, sourcesRoot}:
         return fs.readFileSync(relPath, 'utf-8')
     }
 
-    return findBestMatch(templateUrl, sourcesRoot)
+    const bestMatchPath = findBestMatch(templateUrl, sourcesRoot)
+    return fs.readFileSync(bestMatchPath, 'utf-8')
 }
 
 /**
@@ -26,7 +27,8 @@ export default function resolveTemplateUrl({filePath, templateUrl, sourcesRoot}:
  * @param sourcesRoot
  */
 function findBestMatch(filePath: string, sourcesRoot: string) {
-    const filename = path.parse(filePath).name
+    const {name, ext} = path.parse(filePath)
+    const filename = `${name}${ext}`
     logger.debug(`Searching for ${filename} in ${sourcesRoot}`)
 
     const files = findFilesInDir(sourcesRoot)
@@ -45,11 +47,11 @@ function findBestMatch(filePath: string, sourcesRoot: string) {
     function findFilesInDir(dirName: string): string[] {
         const files = fs.readdirSync(dirName, {withFileTypes: true})
         return files.map(f => {
-            if (f.isFile() && f.name === filename) {
-                return [path.resolve(dirName, f.name)]
-            }
             if (f.isDirectory()) {
                 return findFilesInDir(path.resolve(dirName, f.name))
+            }
+            if (f.isFile() && f.name === filename) {
+                return [path.resolve(dirName, f.name)]
             }
             return []
         }).flat().filter(f => !!f)

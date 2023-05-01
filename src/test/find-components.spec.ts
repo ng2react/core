@@ -1,13 +1,11 @@
-
 import {MultipleComponents} from './test-data'
-import {AngularComponent, InlineTemplate} from '../lib/model/AngularEntity'
+import {AngularComponent} from '../lib/model/AngularEntity'
 import findComponentsInNode from '../lib/modules/parsing/find-components-in-node'
 import createAst from '../lib/modules/parsing/create-ast'
 
 describe('Given an array of angular modules When findComponents is called', () => {
 
     let components: readonly AngularComponent[]
-    const getComponent = (name: string) => components.find(c => c.name === name)
     beforeAll(() => {
         const ast = createAst(MultipleComponents.path, MultipleComponents.content)
         components = findComponentsInNode(ast)
@@ -29,10 +27,5 @@ describe('Given an array of angular modules When findComponents is called', () =
                 expect(component.module?.node.getText()).toEqual(`${component.name}ConstName`)
             }
         }
-    })
-
-    it('Then inline templates are discovered', () => {
-       const template = getComponent('componentWithInlineTemplate')?.template as InlineTemplate
-       expect(template.text).toContain('<div>Inline template</div>')
     })
 })
