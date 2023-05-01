@@ -1,15 +1,18 @@
-import type {AngularComponent} from '../lib'
-import findComponentsInModule from '../lib/modules/find-components'
+
 import {MultipleComponents} from './test-data'
-import resolveTemplates from '../lib/modules/resolve-template'
 import {fail} from 'assert'
+import {AngularComponent} from '../lib/model/AngularEntity'
+import resolveTemplates from '../lib/modules/parsing/resolve-template'
+import findComponentsInNode from '../lib/modules/parsing/find-components-in-node'
+import createAst from '../lib/modules/parsing/create-ast'
 
 describe('Given an array of angular components', () => {
 
-    let components: AngularComponent[]
+    let components: readonly AngularComponent[]
     const getComponent = (name: string) => components.find(c => c.name === name)
     beforeAll(() => {
-        components = findComponentsInModule(MultipleComponents.path)
+        const ast = createAst(MultipleComponents.path, MultipleComponents.content)
+        components = findComponentsInNode(ast)
     })
 
     describe('When findComponents is called with the filPath', () => {

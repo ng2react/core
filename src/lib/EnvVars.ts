@@ -25,8 +25,8 @@ export const OPENAI_MODEL = {
     defaultValue: 'gpt-4'
 } as const satisfies EnvVar
 
-export const OPENAI_ORGANIZATION = {
-    key: 'OPENAI_ORGANIZATION',
+export const OPENAI_ORGANISATION = {
+    key: 'OPENAI_ORGANISATION',
     value: optValue
 } as const satisfies OptionalEnvVar
 

@@ -1,14 +1,14 @@
 {
   "name": "@ng2react/core",
-  "version": "0.0.0-alpha.10",
+  "version": "0.0.0-alpha.11",
   "description": "Convert AngularJS 1.x components to React components",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "./dist/cjs/api/main.js",
+  "module": "./dist/esm/api/main.js",
+  "types": "./dist/types/api/main.d.ts",
   "exports": {
-    "require": "./dist/cjs/index.js",
-    "import": "./dist/esm/index.js",
-    "types": "./dist/types/index.d.ts"
+    "require": "./dist/cjs/api/main.js",
+    "import": "./dist/esm/api/main.js",
+    "types": "./dist/types/api/main.d.ts"
   },
   "files": [
     "dist",
