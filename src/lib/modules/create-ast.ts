@@ -1,5 +1,5 @@
 import {createSourceFile, ScriptTarget, type SourceFile} from 'typescript'
-import fs from 'fs'
+import * as fs from 'fs'
 
 export default function createAst(filePath: string): SourceFile
 export default function createAst(filePath: string, fileContent: string): SourceFile

@@ -1,6 +1,0 @@
-extension:
-  - js
-  - mjs
-  - cjs
-spec: ./src/test/**/*.spec.ts
-require: ts-node/register

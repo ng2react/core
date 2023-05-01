@@ -4,7 +4,7 @@ import type Ng2ReactConverter from '../api/Ng2ReactConverter'
 import type {AngularComponent} from '../../model/AngularEntity'
 import toStringComponent from './tostring-component'
 
-export function getConverter(model = OPEN_AI_MODEL.value(), utils = {toStringComponent}): Ng2ReactConverter {
+export function getConverter(model = OPEN_AI_MODEL.value()): Ng2ReactConverter {
     const configuration = new Configuration({
         apiKey: OPENAI_API_KEY.value()
     })
@@ -26,7 +26,7 @@ export function getConverter(model = OPEN_AI_MODEL.value(), utils = {toStringCom
                         {
                             role: 'user',
                             content: 'Please provide a React rewrite of the following AngularJS component, and include any additional explanation as a header comment within the code:\n'
-                                + utils.toStringComponent(component)
+                                + toStringComponent(component)
                         }
                     ],
                     temperature: 0
@@ -43,7 +43,7 @@ export function getConverter(model = OPEN_AI_MODEL.value(), utils = {toStringCom
             convert: async (component: AngularComponent) => {
                 const response = await openai.createCompletion({
                     model,
-                    prompt: '#AngularJS to React:\nAngularJS:\n' + utils.toStringComponent(component) + '\nReact:\n',
+                    prompt: '#AngularJS to React:\nAngularJS:\n' + toStringComponent(component) + '\nReact:\n',
                     temperature: 0,
                     max_tokens: 2048
                 })

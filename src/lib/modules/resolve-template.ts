@@ -1,6 +1,6 @@
 import type {AngularComponent, UnresolvedUrlTemplate, UrlTemplate} from '../model/AngularEntity'
-import path from 'path'
-import fs from 'fs'
+import * as path from 'path'
+import * as fs from 'fs'
 
 export default function resolveTemplates(components: AngularComponent[]): AngularComponent[] {
     return components.map(component => {
