@@ -3,19 +3,14 @@ import Ng2ReactConverter, {Ng2ReactConversionResult} from './Ng2ReactConverter'
 import type {AngularComponent} from '../../model/AngularEntity'
 import toStringComponent from './tostring-component'
 import {buildPrompt, extractJsx} from './gpt-prompt-builder'
-import {OPENAI_API_KEY, OPENAI_MODEL} from '../../EnvVars'
 
 export type OpenAIOptions = {
-    readonly apiKey?: string,
-    readonly model?: string,
+    readonly apiKey: string,
+    readonly model: string,
     readonly organization?: string
 }
 
-export function getConverter({
-                                 apiKey = OPENAI_API_KEY.value(),
-                                 organization = OPENAI_API_KEY.value(),
-                                 model = OPENAI_MODEL.value()
-                             }: OpenAIOptions): Ng2ReactConverter {
+export function getConverter({apiKey, organization, model}: OpenAIOptions): Ng2ReactConverter {
     const configuration = new Configuration({
         apiKey,
         organization
