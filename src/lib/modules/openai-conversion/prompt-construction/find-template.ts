@@ -1,11 +1,9 @@
 import {
-    isCallExpression,
-    isLeftHandSideExpression,
+    type Expression,
     isObjectLiteralExpression,
     isStringTextContainingNode,
     type ObjectLiteralElementLike
 } from 'typescript'
-import {AngularComponent} from '../../../model/AngularEntity'
 
 export type AngularTemplate = InlineTemplate | TemplateUrl
 
@@ -20,9 +18,9 @@ export type TemplateUrl = Readonly<{
 
 /**
  * Takes the second argument of an angularjs component declaration and returns the template
+ * @param node
  */
-export default function findTemplate(component: AngularComponent): AngularTemplate {
-    const node = component.node.arguments[1]
+export default function findTemplate(node: Expression): AngularTemplate {
     if (!isObjectLiteralExpression(node)) {
         throw Error('template node is not an object literal expression')
     }
@@ -51,14 +49,11 @@ function isRequireStatement(node: ObjectLiteralElementLike) {
         return false
     }
     const initializer = node.initializer
-    if (!isCallExpression(initializer)) {
+    if (!isStringTextContainingNode(initializer)) {
         return false
     }
-    const expression = initializer.expression
-    if (!isLeftHandSideExpression(expression)) {
-        return false
-    }
-    return expression.getText() === 'require'
+    const text = initializer.text
+    return text.startsWith('require(') && text.endsWith(')')
 }
 
 /**
@@ -72,12 +67,13 @@ function getPathFromRequireStatement(node: ObjectLiteralElementLike) {
         throw Error('template property is not an initializer')
     }
     const initializer = node.initializer
-    if (!isCallExpression(initializer)) {
-        throw Error('template initializer is not a require statement')
+    if (!isStringTextContainingNode(initializer)) {
+        throw Error('template initializer is not a string')
     }
-    // Remove the quotes
-    const innerText = initializer.arguments[0].getText()
-    return innerText.slice(1, innerText.length - 1)
+    // Remove the require and the quotes
+    let innerText = initializer.text
+    innerText = innerText.slice(9, innerText.length - 1)
+    return innerText
 }
 
 function getTemplateFromUrlProp(property: ObjectLiteralElementLike) {

@@ -1,16 +1,16 @@
 import {Configuration, OpenAIApi} from 'openai'
 import Ng2ReactConverter, {Ng2ReactConversionResult} from './Ng2ReactConverter'
 import type {AngularComponent} from '../../model/AngularEntity'
-import toStringComponent from './tostring-component'
-import {buildPrompt, processResponse} from './gpt-prompt-builder'
+import {buildPrompt, processResponse} from './prompt-construction/gpt-prompt-builder'
 
 export type OpenAIOptions = {
     readonly apiKey: string,
     readonly model: string,
+    readonly sourcesRoot: string
     readonly organization?: string
 }
 
-export function getConverter({apiKey, organization, model}: OpenAIOptions): Ng2ReactConverter {
+export function getConverter({apiKey, organization, model, sourcesRoot}: OpenAIOptions): Ng2ReactConverter {
     const configuration = new Configuration({
         apiKey,
         organization
@@ -32,7 +32,7 @@ export function getConverter({apiKey, organization, model}: OpenAIOptions): Ng2R
                     messages: [
                         {
                             role: 'user',
-                            content: buildPrompt('component', component)
+                            content: buildPrompt('component', component, sourcesRoot)
                         }
                     ],
                     temperature: 0
@@ -51,7 +51,7 @@ export function getConverter({apiKey, organization, model}: OpenAIOptions): Ng2R
             convert: async (component: AngularComponent) => {
                 const response = await openai.createCompletion({
                     model,
-                    prompt: '#AngularJS to React:\nAngularJS:\n' + toStringComponent(component) + '\nReact:\n',
+                    prompt: buildPrompt('component', component, sourcesRoot), //'#AngularJS to React:\nAngularJS:\n' + toStringComponent(component) + '\nReact:\n',
                     temperature: 0,
                     max_tokens: 2048
                 })
