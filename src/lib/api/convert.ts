@@ -4,11 +4,17 @@ import * as fs from 'fs'
 import {getConverter, OpenAIOptions} from '../modules/openai-conversion/openai-converter'
 import {search} from './main'
 import {OPENAI_API_KEY, OPENAI_MODEL, OPENAI_ORGANIZATION} from '../EnvVars'
+import * as path from 'path'
 
 type ConvertOptions = {
     readonly apiKey?: string,
     readonly model?: string,
-    readonly organization?: string
+    readonly organization?: string,
+    /**
+     * The root directory of the project. If not specified, the directory below that of the
+     * nearest package.json file will be used.
+     */
+    readonly sourcesRoot?: string
 }
 
 /**
@@ -60,8 +66,21 @@ export function convert(absoluteFilePathOrComponent: string | AngularComponent,
             return {
                 apiKey: options.apiKey ?? OPENAI_API_KEY.value(),
                 model: options.model ?? OPENAI_MODEL.value(),
-                organization: options.organization ?? OPENAI_ORGANIZATION.value()
+                organization: options.organization ?? OPENAI_ORGANIZATION.value(),
+                sourcesRoot: options.sourcesRoot ?? findNearestDirToPackageJson(filename)
             } satisfies OpenAIOptions
+        }
+
+        function findNearestDirToPackageJson(filename: string) {
+            const parts = filename.split(path.sep)
+            for (let i = parts.length - 1; i >= 0; i--) {
+                const path = parts.slice(0, i).join('/')
+                if (fs.existsSync(path + '/package.json')) {
+                    return path + parts[i + 1] // add the last part back
+                }
+            }
+            throw Error(`Could not find package.json in ${filename} or any of its parent directories.` +
+                ' Try explicitly setting the project root.')
         }
     }
 }
