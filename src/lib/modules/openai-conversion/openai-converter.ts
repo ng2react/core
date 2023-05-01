@@ -2,7 +2,7 @@ import {Configuration, OpenAIApi} from 'openai'
 import Ng2ReactConverter, {Ng2ReactConversionResult} from './Ng2ReactConverter'
 import type {AngularComponent} from '../../model/AngularEntity'
 import toStringComponent from './tostring-component'
-import {buildPrompt, extractJsx} from './gpt-prompt-builder'
+import {buildPrompt, processResponse} from './gpt-prompt-builder'
 
 export type OpenAIOptions = {
     readonly apiKey: string,
@@ -41,10 +41,7 @@ export function getConverter({apiKey, organization, model}: OpenAIOptions): Ng2R
                     .map(c => c.message?.content)
                     .filter(m => m !== undefined) as string[]
                 return results
-                    .map(markdown => ({
-                        markdown,
-                        jsx: extractJsx(markdown)
-                    })) satisfies Ng2ReactConversionResult[]
+                    .map(processResponse) satisfies Ng2ReactConversionResult[]
             }
         } satisfies Ng2ReactConverter
     }
@@ -62,10 +59,7 @@ export function getConverter({apiKey, organization, model}: OpenAIOptions): Ng2R
                     .map(c => c.text)
                     .filter(text => text !== undefined) as string[]
                 return results
-                    .map(jsx => ({
-                        jsx,
-                        markdown: '```jsx\n' + jsx + '\n```'
-                    })) satisfies Ng2ReactConversionResult[]
+                    .map(processResponse) satisfies Ng2ReactConversionResult[]
             }
         } satisfies Ng2ReactConverter
     }
