@@ -10,6 +10,23 @@ export function buildPrompt(type: 'component', component: AngularComponent) {
         + toStringComponent(component)
 }
 
-export function extractJsx(markdown: string) {
+export function processResponse(response: string) {
+    return {
+        jsx: extractJsx(response),
+        markdown: extractMarkdown(response)
+    }
+}
+
+function extractJsx(markdown: string) {
     return /(?<=\/\/ ___NG2R_START___\n)[\s\S]*?(?=\/\/ ___NG2R_STOP___)/.exec(markdown)?.[0] ?? ''
+}
+
+function extractMarkdown(response: string) {
+    if (response.includes('```')) {
+        // Assume is markdown
+        return response
+    } else {
+        // Assume is plaintext
+        return '```jsx\n' + response + '\n```'
+    }
 }
