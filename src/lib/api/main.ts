@@ -9,11 +9,9 @@ export {setLogLevel} from '../Logger'
 
 /**
  * Find all components in a file.
- * @param absoluteFilePath
  */
-export function search(absoluteFilePath: string): readonly AngularComponent[] {
-    const fileContent = fs.readFileSync(absoluteFilePath, 'utf-8')
-    const ast = createAst(absoluteFilePath, fileContent)
+export function search(fileContent: string, {filename = 'unknown.ts'} = {}): readonly AngularComponent[] {
+    const ast = createAst(filename, fileContent)
     return findComponentsInNode(ast)
 }
 
@@ -34,11 +32,12 @@ export function convert(absoluteFilePathOrComponent: string | AngularComponent, 
         if (typeof absoluteFilePathOrComponent !== 'string') {
             return absoluteFilePathOrComponent
         }
-        const absoluteFilePath = absoluteFilePathOrComponent
-        const components = search(absoluteFilePath)
+        const filename = absoluteFilePathOrComponent
+        const fileContent = fs.readFileSync(filename, 'utf-8')
+        const components = search(fileContent, {filename})
         const component = components.find(c => c.name === componentName)
         if (!component) {
-            throw Error(`Could not find component ${componentName} in ${absoluteFilePath}`)
+            throw Error(`Could not find component ${componentName} in ${filename}`)
         }
         return component
     })()
