@@ -4,7 +4,7 @@ import {
     isStringTextContainingNode,
     type ObjectLiteralElementLike
 } from 'typescript'
-import type {AngularTemplate, InlineTemplate, UnresolvedUrlTemplate} from '../model/AngularEntity'
+import type {AngularTemplate, InlineTemplate, UnresolvedUrlTemplate} from '../../model/AngularEntity'
 
 /**
  * Takes the second argument of an angularjs component declaration and returns the template

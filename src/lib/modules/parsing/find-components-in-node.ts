@@ -1,23 +1,19 @@
 import {type CallExpression, isStringTextContainingNode, type Node} from 'typescript'
-import type {AngularComponent} from '../model/AngularEntity'
+import type {AngularComponent} from '../../model/AngularEntity'
 import findModule from './find-module'
 import findTemplate from './find-template'
 import isDeclarationOf from './is-deculation-of'
-import createAst from './create-ast'
-import getLogger from '../Logger'
+import getLogger from '../../Logger'
 
-export default function findComponents(node: Node | string): AngularComponent[] {
+export default function findComponentsInNode(node: Node): Readonly<AngularComponent[]> {
     const logger = getLogger('find-components')
 
-    if (typeof node === 'string') {
-        node = createAst(node)
-    }
     const components: AngularComponent[] = []
     node.forEachChild(childNode => {
         if (isDeclarationOf(childNode, 'component')) {
             components.push(componentFrom(childNode))
         } else {
-            components.push(...findComponents(childNode))
+            components.push(...findComponentsInNode(childNode))
         }
     })
     return components

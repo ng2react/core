@@ -1,7 +1,15 @@
 interface EnvVar {
     readonly key: string;
 
-    value(): string;
+    value(): string
+
+    readonly defaultValue?: string;
+}
+
+interface OptionalEnvVar {
+    readonly key: string;
+
+    value(): string | undefined;
 
     readonly defaultValue?: string;
 }
@@ -11,21 +19,25 @@ export const OPENAI_API_KEY = {
     value
 } as const satisfies EnvVar
 
-export const OPEN_AI_MODEL = {
-    key: 'OPEN_AI_MODEL',
+export const OPENAI_MODEL = {
+    key: 'OPENAI_MODEL',
     value,
     defaultValue: 'gpt-4'
 } as const satisfies EnvVar
 
+export const OPENAI_ORGANISATION = {
+    key: 'OPENAI_ORGANISATION',
+    value: optValue
+} as const satisfies OptionalEnvVar
 
 function value(this: EnvVar) {
-    const value = process.env[this.key]
+    const value = optValue.call(this)
     if (value !== undefined) {
         return value
     }
-    if (this.defaultValue !== undefined) {
-        return this.defaultValue
-    }
     throw new Error(`Environment variable ${this.key} is required`)
+}
 
+function optValue(this: OptionalEnvVar) {
+    return process.env[this.key] ?? this.defaultValue
 }

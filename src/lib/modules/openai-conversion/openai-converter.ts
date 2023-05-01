@@ -1,12 +1,18 @@
 import {Configuration, OpenAIApi} from 'openai'
-import {OPEN_AI_MODEL, OPENAI_API_KEY} from '../../EnvVars'
-import type Ng2ReactConverter from '../api/Ng2ReactConverter'
+import {OPENAI_API_KEY, OPENAI_MODEL, OPENAI_ORGANISATION} from '../../EnvVars'
+import Ng2ReactConverter, {Ng2ReactConversionResult} from './Ng2ReactConverter'
 import type {AngularComponent} from '../../model/AngularEntity'
 import toStringComponent from './tostring-component'
+import {buildPrompt, extractJsx} from './gpt-prompt-builder'
 
-export function getConverter(model = OPEN_AI_MODEL.value()): Ng2ReactConverter {
+export function getConverter({
+                                 model = OPENAI_MODEL.value(),
+                                 apiKey = OPENAI_API_KEY.value(),
+                                 organization = OPENAI_ORGANISATION.value()
+                             } = {}): Ng2ReactConverter {
     const configuration = new Configuration({
-        apiKey: OPENAI_API_KEY.value()
+        apiKey,
+        organization
     })
     const openai = new OpenAIApi(configuration)
     if (model.includes('gpt-4')) {
@@ -25,15 +31,19 @@ export function getConverter(model = OPEN_AI_MODEL.value()): Ng2ReactConverter {
                     messages: [
                         {
                             role: 'user',
-                            content: 'Please provide a React rewrite of the following AngularJS component, and include any additional explanation as a header comment within the code:\n'
-                                + toStringComponent(component)
+                            content: buildPrompt('component', component)
                         }
                     ],
                     temperature: 0
                 })
-                return response.data.choices
+                const results = response.data.choices
                     .map(c => c.message?.content)
                     .filter(m => m !== undefined) as string[]
+                return results
+                    .map(markdown => ({
+                        markdown,
+                        jsx: extractJsx(markdown)
+                    })) satisfies Ng2ReactConversionResult[]
             }
         } satisfies Ng2ReactConverter
     }
@@ -47,9 +57,14 @@ export function getConverter(model = OPEN_AI_MODEL.value()): Ng2ReactConverter {
                     temperature: 0,
                     max_tokens: 2048
                 })
-                return response.data.choices
+                const results = response.data.choices
                     .map(c => c.text)
                     .filter(text => text !== undefined) as string[]
+                return results
+                    .map(jsx => ({
+                        jsx,
+                        markdown: '```jsx\n' + jsx + '\n```'
+                    })) satisfies Ng2ReactConversionResult[]
             }
         } satisfies Ng2ReactConverter
     }
