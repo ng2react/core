@@ -10,7 +10,7 @@ export function buildPrompt(type: 'component', component: AngularComponent, sour
         ' * So that I can programmatically find your code, please top and tail it with "// ___NG2R_START___" and "// ___NG2R_STOP___"'
     ]
 
-    const template = findTemplate(component.node.arguments[1])
+    const template = findTemplate(component)
     if (template.resolution === 'inline') {
         promptLines.push('\nHere is the AngularJS component:\n')
         promptLines.push(component.node.getText())
