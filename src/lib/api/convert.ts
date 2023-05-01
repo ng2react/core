@@ -3,6 +3,13 @@ import {Ng2ReactConversionResult} from '../modules/openai-conversion/Ng2ReactCon
 import * as fs from 'fs'
 import {getConverter, OpenAIOptions} from '../modules/openai-conversion/openai-converter'
 import {search} from './main'
+import {OPENAI_API_KEY, OPENAI_MODEL, OPENAI_ORGANIZATION} from '../EnvVars'
+
+type ConvertOptions = {
+    readonly apiKey?: string,
+    readonly model?: string,
+    readonly organization?: string
+}
 
 /**
  * Convert a component to React. For use in javascript/typescript environments
@@ -10,15 +17,15 @@ import {search} from './main'
  *
  * @see search
  */
-export function convert(component: AngularComponent, config: OpenAIOptions): Promise<readonly Ng2ReactConversionResult[]>
+export function convert(component: AngularComponent, config: ConvertOptions): Promise<readonly Ng2ReactConversionResult[]>
 /**
  * Convert a component to React. For use in CLI based environments where you only
  * have access to the absolute file path and component name.
  */
-export function convert(absoluteFilePath: string, componentName: string, config: OpenAIOptions): Promise<readonly Ng2ReactConversionResult[]>
+export function convert(absoluteFilePath: string, componentName: string, config: ConvertOptions): Promise<readonly Ng2ReactConversionResult[]>
 export function convert(absoluteFilePathOrComponent: string | AngularComponent,
-                        componentNameOrConfig: string | OpenAIOptions,
-                        optConfig?: OpenAIOptions) {
+                        componentNameOrConfig: string | ConvertOptions,
+                        optConfig?: ConvertOptions) {
     const [component, config] = getComponentAndOptions()
     const converter = getConverter(config)
     return converter.convert(component)
@@ -46,11 +53,15 @@ export function convert(absoluteFilePathOrComponent: string | AngularComponent,
             }
         }
 
-        function parseOptions(options: OpenAIOptions | string | undefined) {
+        function parseOptions(options: ConvertOptions | string | undefined) {
             if (typeof options !== 'object' || options === null) {
                 throw Error(`Expected object, got ${options}`)
             }
-            return options
+            return {
+                apiKey: options.apiKey ?? OPENAI_API_KEY.value(),
+                model: options.model ?? OPENAI_MODEL.value(),
+                organization: options.organization ?? OPENAI_ORGANIZATION.value()
+            } satisfies OpenAIOptions
         }
     }
 }
