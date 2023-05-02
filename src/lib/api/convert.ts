@@ -80,7 +80,7 @@ function findNearestDirToPackageJson(filename: string) {
     for (let i = parts.length - 1; i >= 0; i--) {
         const path = parts.slice(0, i).join('/')
         if (fs.existsSync(path + '/package.json')) {
-            return path + parts[i + 1] // add the last part back
+            return `${path}/${parts[i + 1]}` // add the last part back
         }
     }
     throw Error(`Could not find package.json in ${filename} or any of its parent directories.` +
