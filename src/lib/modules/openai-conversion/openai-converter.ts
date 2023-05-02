@@ -6,11 +6,11 @@ import {buildPrompt, processResponse} from './prompt-construction/gpt-prompt-bui
 export type OpenAIOptions = {
     readonly apiKey: string,
     readonly model: string,
-    readonly sourcesRoot: string
+    readonly sourceRoot: string
     readonly organization?: string
 }
 
-export function getConverter({apiKey, organization, model, sourcesRoot}: OpenAIOptions): Ng2ReactConverter {
+export function getConverter({apiKey, organization, model, sourceRoot}: OpenAIOptions): Ng2ReactConverter {
     const configuration = new Configuration({
         apiKey,
         organization
@@ -32,7 +32,7 @@ export function getConverter({apiKey, organization, model, sourcesRoot}: OpenAIO
                     messages: [
                         {
                             role: 'user',
-                            content: buildPrompt('component', component, sourcesRoot)
+                            content: buildPrompt('component', component, sourceRoot)
                         }
                     ],
                     temperature: 0
@@ -51,7 +51,7 @@ export function getConverter({apiKey, organization, model, sourcesRoot}: OpenAIO
             convert: async (component: AngularComponent) => {
                 const response = await openai.createCompletion({
                     model,
-                    prompt: buildPrompt('component', component, sourcesRoot), //'#AngularJS to React:\nAngularJS:\n' + toStringComponent(component) + '\nReact:\n',
+                    prompt: buildPrompt('component', component, sourceRoot), //'#AngularJS to React:\nAngularJS:\n' + toStringComponent(component) + '\nReact:\n',
                     temperature: 0,
                     max_tokens: 2048
                 })

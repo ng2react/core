@@ -5,17 +5,7 @@ import {getConverter, OpenAIOptions} from '../modules/openai-conversion/openai-c
 import {search} from './main'
 import {OPENAI_API_KEY, OPENAI_MODEL, OPENAI_ORGANIZATION} from '../EnvVars'
 import * as path from 'path'
-
-type ConvertOptions = {
-    readonly apiKey?: string,
-    readonly model?: string,
-    readonly organization?: string,
-    /**
-     * The root directory of the project. If not specified, the directory below that of the
-     * nearest package.json file will be used.
-     */
-    readonly sourcesRoot?: string
-}
+import ConvertOptions from './ConvertOptions'
 
 /**
  * Convert a component to React. For use in javascript/typescript environments
@@ -71,7 +61,7 @@ function parseOptions(options: ConvertOptions | string | undefined, absoluteFile
         apiKey: options.apiKey ?? OPENAI_API_KEY.value(),
         model: options.model ?? OPENAI_MODEL.value(),
         organization: options.organization ?? OPENAI_ORGANIZATION.value(),
-        sourcesRoot: options.sourcesRoot ?? findNearestDirToPackageJson(absoluteFilePath)
+        sourceRoot: options.sourceRoot ?? findNearestDirToPackageJson(absoluteFilePath)
     } satisfies OpenAIOptions
 }
 
