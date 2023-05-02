@@ -4,7 +4,10 @@ import './todo-list.css'
 import todoListTpl from './todo-list.html';
 
 class TodoListCtrl {
-    constructor() {
+    static get $inject() {
+        return ['myService'];
+    }
+    constructor(myService) {
         this.items = [];
     }
     /**
@@ -44,7 +47,6 @@ componentOnConstModuleConstName.component('componentOnConstModule',  {
         items: '<',
     }
 })
-
 
 angular.module('componentWithInlineTemplateModule', [])
     .component('componentWithInlineTemplate', {
