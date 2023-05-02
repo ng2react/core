@@ -16,7 +16,7 @@ workspace "ng2react" "A tool that converts AngularJS components to React using O
 
             ng2react_core = container "@ng2react/core" "Main Ng2React API" "NodeJS" {
                 typescript = component "Typescript" "AST Parsing" "JavaScript" "External"
-                ng2react_core_logic = component "@ng2react/core" "Core business logic" "JavaScript" {
+                ng2react_core_component = component "@ng2react/core" "Core business logic" "JavaScript" {
                     this -> typescript "Uses"
                     this -> openAiApi "Uses"
                 }
@@ -24,22 +24,31 @@ workspace "ng2react" "A tool that converts AngularJS components to React using O
 
             ide_nodejs = container "NodeJS IDE" "IDEs that support JavaScript plugins" "IDE" {
                 ng2react_vscode = component "@ng2react/vscode" "VSCode IDE Plugin" "JavaScript" {
-                    this -> ng2react_core "Uses"
+                    this -> ng2react_core_component "Uses"
                     this -> feedbackRestService "Sends anlysis to"
                 }
             }
-            ng2react_ide_generic = container "Generic IDE" "IDEs without native JavaScript support" "IntelliJ, Eclipse, NeoVim, etc."  {
-                ng2react_cli = component "@ng2react/cli" "Command line interface for ng2react" "stdio" {
-                    this -> ng2react_core "Uses"
+
+            ng2react_cli = container "@ng2react/cli" "Command line interface for ng2react" "stdio" {
+                typescript_cli = component "Typescript" "AST Parsing" "JavaScript" "External"
+                ng2react_core_component_cli = component "@ng2react/core" "Core business logic" "JavaScript" {
+                    this -> typescript_cli "Uses"
+                    this -> openAiApi "Uses"
                 }
+                ng2react_cli_component = component "@ng2react/cli" "Command line interface for ng2react" "JavaScript" {
+                    this -> ng2react_core_component_cli "Uses"
+                }
+            }
+
+            ng2react_ide_generic = container "Generic IDE" "IDEs without native JavaScript support" "IntelliJ, Eclipse, NeoVim, etc."  {
                 ng2react_intellij = component "@ng2react/intellij" "IntelliJ Plugin" "Kotlin" "Proposed" {
-                    this -> ng2react_cli "Uses"
+                    this -> ng2react_cli_component "Uses"
                 }
                 ng2react_neovim = component "@ng2react/NeoVim" "NeoVim Plugin" "Lua" "Proposed" {
-                    this -> ng2react_cli "Uses"
+                    this -> ng2react_cli_component "Uses"
                 }
                 ng2react_eclipse = component "@ng2react/eclipse" "Eclipse Plugin" "Java" "Proposed" {
-                    this -> ng2react_cli "Uses"
+                    this -> ng2react_cli_component "Uses"
                 }   
             }
         }        
@@ -70,21 +79,13 @@ workspace "ng2react" "A tool that converts AngularJS components to React using O
     }
 
     views {
-        // systemLandscape "SystemLandscape" {
-        //     include *
-        //     # exclude ng2react_cli
-        //     autoLayout
-        // }
-
         systemContext ng2react "SystemContext" {
             include *
-            # exclude ng2react_cli
             autoLayout
         }
 
         container ng2react "IDE_Containers" {
             include *
-            # exclude ng2react_cli
             autoLayout lr
         }
 
@@ -96,7 +97,7 @@ workspace "ng2react" "A tool that converts AngularJS components to React using O
 
         container ng2react "IDE_Containers_Generic" {
             include *
-            exclude ng2react_vscode feedbackApi ide_nodejs product_contributor
+            exclude ng2react_vscode feedbackApi ide_nodejs product_contributor ng2react_core
             autoLayout
         }
 
@@ -112,6 +113,11 @@ workspace "ng2react" "A tool that converts AngularJS components to React using O
         }
 
         component ng2react_core "Ng2React_Core" {
+            include *
+            autoLayout lr
+        }
+
+        component ng2react_cli "Ng2React_CLI" {
             include *
             autoLayout lr
         }
