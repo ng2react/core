@@ -39,7 +39,8 @@ export function convert(absoluteFilePathOrComponent: string | AngularComponent,
 
     function getComponentAndOptions(): [AngularComponent, OpenAIOptions] {
         if (typeof absoluteFilePathOrComponent !== 'string') {
-            return [absoluteFilePathOrComponent, parseOptions(componentNameOrConfig)]
+            const filename = absoluteFilePathOrComponent.node.getSourceFile().fileName
+            return [absoluteFilePathOrComponent, parseOptions(componentNameOrConfig, filename)]
         }
 
         assertComponentName(componentNameOrConfig)
@@ -51,36 +52,37 @@ export function convert(absoluteFilePathOrComponent: string | AngularComponent,
         if (!component) {
             throw Error(`Could not find component ${componentName} in ${filename}`)
         }
-        return [component, parseOptions(optConfig)]
+        return [component, parseOptions(optConfig, filename)]
 
         function assertComponentName(s: unknown): asserts s is string {
             if (typeof s !== 'string') {
                 throw Error(`Expected string, got ${s}`)
             }
         }
+    }
 
-        function parseOptions(options: ConvertOptions | string | undefined) {
-            if (typeof options !== 'object' || options === null) {
-                throw Error(`Expected object, got ${options}`)
-            }
-            return {
-                apiKey: options.apiKey ?? OPENAI_API_KEY.value(),
-                model: options.model ?? OPENAI_MODEL.value(),
-                organization: options.organization ?? OPENAI_ORGANIZATION.value(),
-                sourcesRoot: options.sourcesRoot ?? findNearestDirToPackageJson(filename)
-            } satisfies OpenAIOptions
-        }
+}
 
-        function findNearestDirToPackageJson(filename: string) {
-            const parts = filename.split(path.sep)
-            for (let i = parts.length - 1; i >= 0; i--) {
-                const path = parts.slice(0, i).join('/')
-                if (fs.existsSync(path + '/package.json')) {
-                    return path + parts[i + 1] // add the last part back
-                }
-            }
-            throw Error(`Could not find package.json in ${filename} or any of its parent directories.` +
-                ' Try explicitly setting the project root.')
+function parseOptions(options: ConvertOptions | string | undefined, absoluteFilePath: string) {
+    if (typeof options !== 'object' || options === null) {
+        throw Error(`Expected object, got ${options}`)
+    }
+    return {
+        apiKey: options.apiKey ?? OPENAI_API_KEY.value(),
+        model: options.model ?? OPENAI_MODEL.value(),
+        organization: options.organization ?? OPENAI_ORGANIZATION.value(),
+        sourcesRoot: options.sourcesRoot ?? findNearestDirToPackageJson(absoluteFilePath)
+    } satisfies OpenAIOptions
+}
+
+function findNearestDirToPackageJson(filename: string) {
+    const parts = filename.split(path.sep)
+    for (let i = parts.length - 1; i >= 0; i--) {
+        const path = parts.slice(0, i).join('/')
+        if (fs.existsSync(path + '/package.json')) {
+            return path + parts[i + 1] // add the last part back
         }
     }
+    throw Error(`Could not find package.json in ${filename} or any of its parent directories.` +
+        ' Try explicitly setting the project root.')
 }
