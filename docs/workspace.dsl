@@ -1,29 +1,37 @@
 workspace "ng2react" "A tool that converts AngularJS components to React using OpenAI API" {
     !docs .
     model {
-        generic_ide_user = person "Generic IDE User" "A user of the non-JavaScript IDE"
-        vscode_user = person "VSCode IDE User" "A user of the VSCode IDE"
-        developer = person "Developer" "A developer of the ng2react software system."
-
         openAiApi = softwareSystem "OpenAI" "Public API for generative AI" "External"
 
-        feedbackApi = softwareSystem "@ng2react/feedback" "API for submitting feedback from the IDE plugin" {
-            feedbackRestService = container "Feedback Service" "Handles communication between the API and the database" "OpenAPI"
-            feedbackDatabase = container "Feedback Database" "A database for storing feedback data"
-            feedbackViewer = container "Feedback Analysis Client" "A client for reviewing submitted feedback"
-        }
-
         ng2react = softwareSystem "ng2react" "IDE Plugin" {
-            ng2react_core = container "@ng2react/core" "Core business logic" "JavaScript"
-            typescript = container "Typescript" "AST Parsing" "NPM" "External"
-            ng2react_cli = container "@ng2react/cli" "Command line interface for ng2react" "stdio"
+            feedbackApi = container "@ng2react/feedback" "API for submitting feedback from the IDE plugin" {
+                feedbackDatabase = component "Feedback Database" "A database for storing feedback data" 
+                feedbackRestService = component "Feedback Service" "Handles communication between the API and the database" "OpenAPI" {
+                    feedbackRestService -> feedbackDatabase "Stores/Retrieves feedback"
+                }
+                feedbackViewer = component "Feedback Analysis Client" "A client for reviewing submitted feedback" {
+                    this -> feedbackRestService "Retrieves feedback"
+                }
+            }
+
+            ng2react_core = container "@ng2react/core" "Main Ng2React API" "NodeJS" {
+                typescript = component "Typescript" "AST Parsing" "JavaScript" "External"
+                ng2react_core_logic = component "@ng2react/core" "Core business logic" "JavaScript" {
+                    this -> typescript "Uses"
+                    this -> openAiApi "Uses"
+                }
+            }
 
             ide_nodejs = container "NodeJS IDE" "IDEs that support JavaScript plugins" "IDE" {
                 ng2react_vscode = component "@ng2react/vscode" "VSCode IDE Plugin" "JavaScript" {
                     this -> ng2react_core "Uses"
+                    this -> feedbackRestService "Sends anlysis to"
                 }
             }
             ng2react_ide_generic = container "Generic IDE" "IDEs without native JavaScript support" "IntelliJ, Eclipse, NeoVim, etc."  {
+                ng2react_cli = component "@ng2react/cli" "Command line interface for ng2react" "stdio" {
+                    this -> ng2react_core "Uses"
+                }
                 ng2react_intellij = component "@ng2react/intellij" "IntelliJ Plugin" "Kotlin" "Proposed" {
                     this -> ng2react_cli "Uses"
                 }
@@ -32,24 +40,18 @@ workspace "ng2react" "A tool that converts AngularJS components to React using O
                 }
                 ng2react_eclipse = component "@ng2react/eclipse" "Eclipse Plugin" "Java" "Proposed" {
                     this -> ng2react_cli "Uses"
-                }
+                }   
             }
         }        
 
-        vscode_user -> ide_nodejs "Uses"
-        ng2react_vscode -> feedbackRestService "Sends useage data"
-        // ng2react_vscode -> ng2react_core "Uses"
-        ng2react_cli -> ng2react_core "Uses"
-        ng2react_core -> openAiApi "Uses"
-        ng2react_core -> typescript "Uses"
-
-        generic_ide_user -> ng2react_ide_generic "Uses"
-        // ng2react_ide_generic -> feedbackRestService "Sends user feedback"
-
-        feedbackViewer -> feedbackRestService "Retrieves feedback"
-        feedbackRestService -> feedbackDatabase "Stores/Retrieves feedback"
-
-        developer -> feedbackViewer "Uses"
+        product_contributor = person "Developer/Analist" "A contributor to the ng2react software system." {
+            this -> feedbackViewer "Analyses data from"
+        }
+        
+        generic_ide_user = person "User" "AngularJS/React developer who wants to convert AngularJS components to React" {
+            this -> ide_nodejs "Uses"
+            this -> ng2react_ide_generic "Uses"
+        }
 
         deploymentEnvironment "Live" {
             deploymentNode "Developer Laptop" "" "Microsoft Windows 10 or Apple macOS" {
@@ -58,8 +60,9 @@ workspace "ng2react" "A tool that converts AngularJS components to React using O
                 }
             }
             deploymentNode "Remote Server" "" "Feedback API" "" {
-                deploymentNode "FeedbackAPI" "" "" "" {
-                    softwareSystemInstance feedbackApi
+                deploymentNode "FeedbackAPI" "" "" {
+                    // softwareSystemInstance feedbackApi
+                    server = containerInstance feedbackApi
 
                 }
             }
@@ -67,11 +70,11 @@ workspace "ng2react" "A tool that converts AngularJS components to React using O
     }
 
     views {
-        systemLandscape "SystemLandscape" {
-            include *
-            # exclude ng2react_cli
-            autoLayout
-        }
+        // systemLandscape "SystemLandscape" {
+        //     include *
+        //     # exclude ng2react_cli
+        //     autoLayout
+        // }
 
         systemContext ng2react "SystemContext" {
             include *
@@ -87,13 +90,13 @@ workspace "ng2react" "A tool that converts AngularJS components to React using O
 
         container ng2react "IDE_Containers_VSCode" {
             include *
-            exclude ng2react_ide_generic generic_ide_user ng2react_cli
+            exclude ng2react_ide_generic ng2react_cli
             autoLayout
         }
 
         container ng2react "IDE_Containers_Generic" {
             include *
-            exclude ng2react_vscode feedbackApi ide_nodejs vscode_user
+            exclude ng2react_vscode feedbackApi ide_nodejs product_contributor
             autoLayout
         }
 
@@ -108,7 +111,12 @@ workspace "ng2react" "A tool that converts AngularJS components to React using O
             autoLayout lr
         }
 
-        container feedbackApi "Feedback_API" {
+        component ng2react_core "Ng2React_Core" {
+            include *
+            autoLayout lr
+        }
+
+        component feedbackApi "Feedback_API" {
             include *
             autoLayout lr
         }
