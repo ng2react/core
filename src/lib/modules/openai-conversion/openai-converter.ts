@@ -1,12 +1,19 @@
 import {Configuration, OpenAIApi} from 'openai'
-import {OPEN_AI_MODEL, OPENAI_API_KEY} from '../../EnvVars'
-import type Ng2ReactConverter from '../api/Ng2ReactConverter'
+import Ng2ReactConverter, {Ng2ReactConversionResult} from './Ng2ReactConverter'
 import type {AngularComponent} from '../../model/AngularEntity'
-import toStringComponent from './tostring-component'
+import {buildPrompt, processResponse} from './prompt-construction/gpt-prompt-builder'
 
-export function getConverter(model = OPEN_AI_MODEL.value(), utils = {toStringComponent}): Ng2ReactConverter {
+export type OpenAIOptions = {
+    readonly apiKey: string,
+    readonly model: string,
+    readonly sourceRoot: string
+    readonly organization?: string
+}
+
+export function getConverter({apiKey, organization, model, sourceRoot}: OpenAIOptions): Ng2ReactConverter {
     const configuration = new Configuration({
-        apiKey: OPENAI_API_KEY.value()
+        apiKey,
+        organization
     })
     const openai = new OpenAIApi(configuration)
     if (model.includes('gpt-4')) {
@@ -25,15 +32,16 @@ export function getConverter(model = OPEN_AI_MODEL.value(), utils = {toStringCom
                     messages: [
                         {
                             role: 'user',
-                            content: 'Please provide a React rewrite of the following AngularJS component, and include any additional explanation as a header comment within the code:\n'
-                                + utils.toStringComponent(component)
+                            content: buildPrompt('component', component, sourceRoot)
                         }
                     ],
                     temperature: 0
                 })
-                return response.data.choices
+                const results = response.data.choices
                     .map(c => c.message?.content)
                     .filter(m => m !== undefined) as string[]
+                return results
+                    .map(processResponse) satisfies Ng2ReactConversionResult[]
             }
         } satisfies Ng2ReactConverter
     }
@@ -43,13 +51,15 @@ export function getConverter(model = OPEN_AI_MODEL.value(), utils = {toStringCom
             convert: async (component: AngularComponent) => {
                 const response = await openai.createCompletion({
                     model,
-                    prompt: '#AngularJS to React:\nAngularJS:\n' + utils.toStringComponent(component) + '\nReact:\n',
+                    prompt: buildPrompt('component', component, sourceRoot), //'#AngularJS to React:\nAngularJS:\n' + toStringComponent(component) + '\nReact:\n',
                     temperature: 0,
                     max_tokens: 2048
                 })
-                return response.data.choices
+                const results = response.data.choices
                     .map(c => c.text)
                     .filter(text => text !== undefined) as string[]
+                return results
+                    .map(processResponse) satisfies Ng2ReactConversionResult[]
             }
         } satisfies Ng2ReactConverter
     }

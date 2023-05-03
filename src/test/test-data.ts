@@ -1,5 +1,5 @@
-import path from 'path'
-import fs from 'fs'
+import * as path from 'path'
+import * as fs from 'fs'
 
 export const TEST_DATA_DIR = path.resolve(__dirname, 'test_data')
 

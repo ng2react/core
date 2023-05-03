@@ -29,16 +29,17 @@ class TodoListCtrl {
 angular.module('todoList', [])
     .component('todoList', {
         controller: TodoListCtrl,
-        template: '<div class="todoList">\n' +
-            '  <h1>Todo List</h1>\n' +
-            '  <dl class="todoList__items">\n' +
-            '    <li ng-repeat="x in $ctrl.items"><span>{{x}}</span><button ng-click="$ctrl.onDeleteItem($index)" class="todoList__deleteItemBtn"><i class="las la-minus-circle"></i></button></li>\n' +
-            '  </dl>\n' +
-            '  <form ng-submit="$ctrl.onAddItem()">\n' +
-            '    <input type="text" ng-model="$ctrl.newItem" placeholder="Add a new item">\n' +
-            '    <button type="submit" class="todoList__addItemBtn"><i class="las la-plus-circle"></i></button>\n' +
-            '    </form>\n' +
-            '</div>\n',
+        template: `<div class="todoList">
+        <h1>Todo List</h1>
+        <dl class="todoList__items">
+          <li ng-repeat="x in $ctrl.items"><span>{{x}}</span><button ng-click="$ctrl.onDeleteItem($index)" class="todoList__deleteItemBtn"><i class="las la-minus-circle"></i></button></li>
+        </dl>
+        <form ng-submit="$ctrl.onAddItem()">
+          <input type="text" ng-model="$ctrl.newItem" placeholder="Add a new item">
+          <button type="submit" class="todoList__addItemBtn"><i class="las la-plus-circle"></i></button>
+          </form>
+      </div>
+      `,
         bindings: {
             items: '<',
         }

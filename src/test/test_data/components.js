@@ -4,7 +4,10 @@ import './todo-list.css'
 import todoListTpl from './todo-list.html';
 
 class TodoListCtrl {
-    constructor() {
+    static get $inject() {
+        return ['myService'];
+    }
+    constructor(myService) {
         this.items = [];
     }
     /**
@@ -45,7 +48,6 @@ componentOnConstModuleConstName.component('componentOnConstModule',  {
     }
 })
 
-
 angular.module('componentWithInlineTemplateModule', [])
     .component('componentWithInlineTemplate', {
         template: '<div>Inline template</div>'
@@ -57,9 +59,23 @@ angular.module('componentWithTemplateUrlModule', [])
         templateUrl: 'componentWithTemplateUrl.tpl.html'
     })
 
+angular.module('componentWithUnmappedTemplateUrlModule', [])
+    .component('componentWithUnmappedTemplateUrl', {
+        templateUrl: 'some-obscure-prefix/componentWithUnmappedTemplateUrl.tpl.html'
+    })
+
 
 angular.module('componentWithUrlImportedTemplateModule', [])
     .component('componentWithUrlImportedTemplate', {
         template: tpl
     });
+
+
+angular.module('componentWithRequiredTemplateModule', [])
+    .component('componentWithRequiredTemplate', {
+        template: require('./componentWithRequiredTemplate.tpl.html')
+    });
+
+angular.module('componentWithNoTemplateModule', [])
+    .component('componentWithNoTemplate', {});
 
