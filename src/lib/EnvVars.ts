@@ -1,9 +1,11 @@
-interface EnvVar {
+import {OpenAIOptions} from './modules/openai-conversion/openai-converter'
+
+interface EnvVar<T extends string = string> {
     readonly key: string;
 
-    value(): string
+    value(): T
 
-    readonly defaultValue?: string;
+    readonly defaultValue?: T;
 }
 
 interface OptionalEnvVar {
@@ -23,17 +25,17 @@ export const OPENAI_MODEL = {
     key: 'OPENAI_MODEL',
     value,
     defaultValue: 'gpt-4'
-} as const satisfies EnvVar
+} as const satisfies EnvVar<OpenAIOptions['model']>
 
 export const OPENAI_ORGANIZATION = {
     key: 'OPENAI_ORGANIZATION',
     value: optValue
 } as const satisfies OptionalEnvVar
 
-function value(this: EnvVar) {
+function value<T>(this: EnvVar) {
     const value = optValue.call(this)
     if (value !== undefined) {
-        return value
+        return value as T
     }
     throw new Error(`Environment variable ${this.key} is required`)
 }
