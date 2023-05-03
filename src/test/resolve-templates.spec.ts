@@ -10,7 +10,7 @@ describe('Given an array of angular components', () => {
     let components: readonly AngularComponent[]
     const getComponent = (name: string) => components.find(c => c.name === name)
     beforeAll(() => {
-        components = search(MultipleComponents.content, {filename: MultipleComponents.path})
+        components = search(MultipleComponents.content, {file: MultipleComponents.path})
     })
 
     describe('When findComponents is called with the filPath', () => {
