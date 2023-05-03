@@ -9,14 +9,14 @@ export type OpenAIOptions = {
     readonly organization: string | undefined,
     /**
      * The temperature to use when generating completions. Higher values result in more random completions.
-     * Must be between 0 and 2. Defaults to 0.2
+     * Must be between 0 and 2.
      */
     readonly temperature: number | undefined
     /**
      * The root directory of the project. If not specified, the directory below that of the
      * nearest package.json file will be used.
      */
-    readonly sourceRoot: string
+    readonly sourceRoot: string | undefined
 }
 
 type Version = '1' | '2' | '3'

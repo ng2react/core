@@ -2,9 +2,12 @@ import {AngularComponent} from '../../../model/AngularEntity'
 import findTemplate, {AngularTemplate} from './find-template'
 import resolveTemplateUrl from './resolve-template-url'
 import type {ChatCompletionRequestMessage} from 'openai'
+import path from 'path'
+import fs from 'fs'
 
-export function buildGptMessage(component: AngularComponent, sourcesRoot: string) {
+export function buildGptMessage(component: AngularComponent, sourcesRoot: string | undefined) {
     const template = findTemplate(component)
+    sourcesRoot ??= findNearestDirToPackageJson(component.node.getSourceFile().fileName)
     return [
         {
             role: 'user',
@@ -63,7 +66,7 @@ function buildRules() {
     return promptLines.join('\n')
 }
 
-export function buildCompletionPrompt(component: AngularComponent, sourcesRoot: string): string {
+export function buildCompletionPrompt(component: AngularComponent, sourcesRoot: string|undefined): string {
     return `#AngularJS to React:\nAngularJS:\n${component.node.getText()}\nReact:\n`
 }
 
@@ -87,4 +90,17 @@ function extractMarkdown(response: string) {
         // Assume is plaintext
         return '```jsx\n' + response + '\n```'
     }
+}
+
+
+function findNearestDirToPackageJson(filename: string) {
+    const parts = filename.split(path.sep)
+    for (let i = parts.length - 1; i >= 0; i--) {
+        const path = parts.slice(0, i).join('/')
+        if (fs.existsSync(path + '/package.json')) {
+            return `${path}/${parts[i + 1]}` // add the last part back
+        }
+    }
+    throw Error(`Could not find package.json in ${filename} or any of its parent directories.` +
+        ' Try explicitly setting the project root.')
 }
