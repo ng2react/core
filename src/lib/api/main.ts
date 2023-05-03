@@ -7,8 +7,8 @@ export {setLogLevel} from '../Logger'
 /**
  * Find all components in a file.
  */
-export function search(fileContent: string, {filename = 'unknown.ts'} = {}): readonly AngularComponent[] {
-    const ast = createAst(filename, fileContent)
+export function search(fileContent: string, {file = 'unknown.ts'} = {}): readonly AngularComponent[] {
+    const ast = createAst(file, fileContent)
     return findComponentsInNode(ast)
 }
 

@@ -14,7 +14,7 @@
     "todo"
   ],
   "dependencies": {
-    "angular": "^1.8.3"
+    "angular": "^1.8.2"
   },
   "devDependencies": {
     "@types/angular": "^1.8.4",

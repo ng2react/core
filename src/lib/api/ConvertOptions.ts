@@ -1,14 +1,17 @@
 import {OpenAIOptions} from '../modules/openai-conversion/openai-converter'
 
-type ConvertOptions = {
-    readonly apiKey?: string,
-    readonly model?: OpenAIOptions['model'],
-    readonly organization?: string,
+type NgComponentOptions = {
     /**
-     * The root directory of the project. If not specified, the directory below that of the
-     * nearest package.json file will be used.
+     * The absolute path to the file containing the component.
      */
-    readonly sourceRoot?: string
+    readonly file: string,
+    /**
+     * The name of the component/directive to convert.
+     */
+    readonly componentName: string,
+
 }
+
+type ConvertOptions = NgComponentOptions & Partial<OpenAIOptions>
 
 export default ConvertOptions
