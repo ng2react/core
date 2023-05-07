@@ -1,5 +1,5 @@
 workspace "ng2react" "A tool that converts AngularJS components to React using OpenAI API" {
-    !docs .
+    !docs ./arc42
     model {
         openAiApi = softwareSystem "OpenAI" "Public API for generative AI" "External"
 
