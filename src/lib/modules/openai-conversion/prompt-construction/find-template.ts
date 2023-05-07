@@ -3,9 +3,9 @@ import {
     isLeftHandSideExpression,
     isObjectLiteralExpression,
     isStringTextContainingNode,
-    type ObjectLiteralElementLike
+    type ObjectLiteralElementLike,
 } from 'typescript'
-import {AngularComponent} from '../../../model/AngularEntity'
+import { AngularComponent } from '../../../model/AngularEntity'
 
 export type AngularTemplate = InlineTemplate | TemplateUrl
 
@@ -26,20 +26,20 @@ export default function findTemplate(component: AngularComponent): AngularTempla
     if (!isObjectLiteralExpression(node)) {
         throw Error('template node is not an object literal expression')
     }
-    const templateProp = node.properties.find(prop => prop.name?.getText() === 'template')
-    const templateUrlProp = node.properties.find(prop => prop.name?.getText() === 'templateUrl')
+    const templateProp = node.properties.find((prop) => prop.name?.getText() === 'template')
+    const templateUrlProp = node.properties.find((prop) => prop.name?.getText() === 'templateUrl')
 
     if (templateUrlProp) {
         return getTemplateFromUrlProp(templateUrlProp)
     }
     if (!templateProp) {
-        return {resolution: 'inline'} // No template
+        return { resolution: 'inline' } // No template
     }
     if (isRequireStatement(templateProp)) {
         const requirePath = getPathFromRequireStatement(templateProp)
         return getTemplateFromUrl(requirePath)
     }
-    return {resolution: 'inline'} // Looks like it's an inline template
+    return { resolution: 'inline' } // Looks like it's an inline template
 }
 
 /**
@@ -94,7 +94,7 @@ function getTemplateFromUrlProp(property: ObjectLiteralElementLike) {
 function getTemplateFromUrl(url: string) {
     return {
         resolution: 'url',
-        path: url
+        path: url,
     } satisfies TemplateUrl
 }
 

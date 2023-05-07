@@ -13,13 +13,11 @@ export default {
     collectCoverage: true,
 
     // The directory where Jest should output its coverage files
-    coverageDirectory: "coverage",
+    coverageDirectory: 'coverage',
 
-    coverageProvider: "v8",
+    coverageProvider: 'v8',
     transform: {
-        "^.+\\.ts?$": ['ts-jest', {tsconfig: "src/test/tsconfig.json"}],
+        '^.+\\.ts?$': ['ts-jest', { tsconfig: 'src/test/tsconfig.json' }],
     },
-    roots: [
-        "<rootDir>/src/test"
-    ]
-};
+    roots: ['<rootDir>/src/test'],
+}

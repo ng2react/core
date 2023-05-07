@@ -5,7 +5,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname)
 export default {
     mode: 'development',
     entry: {
-        app: path.resolve(__dirname, 'src/app.js')
+        app: path.resolve(__dirname, 'src/app.js'),
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -16,7 +16,7 @@ export default {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: { loader: 'babel-loader' }
+                use: { loader: 'babel-loader' },
             },
             // {
             //     test: /\.{js,ts,jsx,tsx}$/,
@@ -29,14 +29,14 @@ export default {
                 test: /\.html$/,
                 use: {
                     loader: 'raw-loader',
-                }
+                },
             },
             {
                 test: /\.css$/i,
                 include: path.resolve(__dirname, 'src'),
                 use: ['style-loader', 'css-loader'],
             },
-        ]
+        ],
     },
     resolve: {
         extensions: ['.js', '.ts', '.jsx', '.tsx'],
@@ -47,12 +47,12 @@ export default {
         open: true,
         static: path.resolve(__dirname, 'dist'),
         client: {
-            overlay: false
-        }
+            overlay: false,
+        },
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/app.html',
         }),
-    ]
+    ],
 }

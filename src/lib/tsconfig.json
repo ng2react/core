@@ -1,9 +1,9 @@
 {
-  "extends": "../../tsconfig.generic.json",
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "ES2022",
-    "declarationDir": "../../dist/types",
-    "outDir": "../../dist/esm"
-  }
+    "extends": "../../tsconfig.generic.json",
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ES2022",
+        "declarationDir": "../../dist/types",
+        "outDir": "../../dist/esm"
+    }
 }

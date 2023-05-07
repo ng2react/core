@@ -1,26 +1,27 @@
-import angular from "angular";
+import angular from 'angular'
 import './todo-list/todo-list-service.js'
 import './app.css'
-import { angularize } from './angularise.cjs';
-import TodoList from "./todo-list/todo-list.jsx";
-import TodoListAi from "./todo-list/todo-list.ai.jsx";
+import { angularize } from './angularise.cjs'
+import TodoList from './todo-list/todo-list.jsx'
+import TodoListAi from './todo-list/todo-list.ai.jsx'
 
 // angularize(TodoList, "todoList", angular.module("todoList", []), {
 //     items: "<",
 //     setItems: "&"
 // });
 
-angularize(TodoListAi, "todoListAi", angular.module("todoListAi", []), {
-    items: "<",
-    setItems: "&"
-});
+angularize(TodoListAi, 'todoListAi', angular.module('todoListAi', []), {
+    items: '<',
+    setItems: '&',
+})
 
-angularize(TodoList, "todoList", angular.module("todoList", []), {
-    items: "<",
-    setItems: "&"
-});
+angularize(TodoList, 'todoList', angular.module('todoList', []), {
+    items: '<',
+    setItems: '&',
+})
 
-angular.module('app', ['todoList', 'todoListAi', 'todoListService'])
+angular
+    .module('app', ['todoList', 'todoListAi', 'todoListService'])
     .controller('AppCtrl', function ($log, $scope, todoListService) {
         $scope.items = []
 
@@ -32,6 +33,6 @@ angular.module('app', ['todoList', 'todoListAi', 'todoListService'])
         }
 
         todoListService.getItems().then((items) => {
-            $scope.items = items;
-        });
+            $scope.items = items
+        })
     })

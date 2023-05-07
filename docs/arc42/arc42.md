@@ -1,7 +1,6 @@
 **NG2React**
 
-Introduction and Goals
-======================
+# Introduction and Goals
 
 Describes the relevant requirements and the driving forces that software
 architects and development team must consider. These include
@@ -13,8 +12,7 @@ architects and development team must consider. These include
 
 -   relevant stakeholders and their expectations
 
-Requirements Overview
----------------------
+## Requirements Overview
 
 **Contents.**
 
@@ -37,8 +35,7 @@ documents.
 Keep these excerpts as short as possible. Balance readability of this
 document with potential redundancy w.r.t to requirements documents.
 
-Quality Goals 
--------------
+## Quality Goals
 
 **Contents.**
 
@@ -58,8 +55,7 @@ architect do not know how the quality of your work will be judged …
 
 A table with quality goals and concrete scenarios, ordered by priorities
 
-Stakeholders
-------------
+## Stakeholders
 
 **Contents.**
 
@@ -88,13 +84,12 @@ level of detail of your work and its results.
 Table with role names, person names, and their expectations with respect
 to the architecture and its documentation.
 
-| Role/Name   | Contact                   | Expectations              |
-| ----------- | ------------------------- | ------------------------- |
-| Role-1      | Contact-1                 | *&lt;Expectation-1*&gt;   |
-| Role-2      | Contact-2                 | *&lt;Expectation-2*&gt;   |
+| Role/Name | Contact   | Expectations            |
+| --------- | --------- | ----------------------- |
+| Role-1    | Contact-1 | _&lt;Expectation-1_&gt; |
+| Role-2    | Contact-2 | _&lt;Expectation-2_&gt; |
 
-Architecture Constraints
-========================
+# Architecture Constraints
 
 **Contents.**
 
@@ -116,8 +111,7 @@ subdivide them into technical constraints, organizational and political
 constraints and conventions (e.g. programming or versioning guidelines,
 documentation or naming conventions)
 
-System Scope and Context
-========================
+# System Scope and Context
 
 **Contents.**
 
@@ -143,8 +137,7 @@ Various options:
 
 -   Lists of communication partners and their interfaces.
 
-Business Context
-----------------
+## Business Context
 
 **Contents.**
 
@@ -171,8 +164,7 @@ the communication partner, the inputs, and the outputs.
 
 **&lt;optionally: Explanation of external domain interfaces&gt;**
 
-Technical Context
------------------
+## Technical Context
 
 **Contents.**
 
@@ -199,8 +191,7 @@ and input/output.
 
 **&lt;Mapping Input/Output to Channels&gt;**
 
-Solution Strategy
-=================
+# Solution Strategy
 
 **Contents.**
 
@@ -230,8 +221,7 @@ Motivate what you have decided and why you decided that way, based upon
 your problem statement, the quality goals and key constraints. Refer to
 details in the following sections.
 
-Building Block View
-===================
+# Building Block View
 
 **Content.**
 
@@ -242,7 +232,7 @@ functions, macros, operations, datas structures, …) as well as their
 dependencies (relationships, associations, …)
 
 This view is mandatory for every architecture documentation. In analogy
-to a house this is the *floor plan*.
+to a house this is the _floor plan_.
 
 **Motivation.**
 
@@ -268,8 +258,7 @@ together with black box descriptions of their internal building blocks.
 
 **Level 3** zooms into selected building blocks of level 2, and so on.
 
-Whitebox Overall System
------------------------
+## Whitebox Overall System
 
 Here you describe the decomposition of the overall system using the
 following white box template. It contains
@@ -281,7 +270,7 @@ following white box template. It contains
 -   black box descriptions of the contained building blocks. For these
     we offer you alternatives:
 
-    -   use *one* table for a short and pragmatic overview of all
+    -   use _one_ table for a short and pragmatic overview of all
         contained building blocks and their interfaces
 
     -   use a list of black box descriptions of the building blocks
@@ -299,35 +288,35 @@ following white box template. It contains
     necessary compatibilities and many things more. In the best case you
     will get away with examples or simple signatures.
 
-***&lt;Overview Diagram&gt;***
+**_&lt;Overview Diagram&gt;_**
 
 Motivation
 
-:   *&lt;text explanation&gt;*
+: _&lt;text explanation&gt;_
 
 Contained Building Blocks
 
-:   *&lt;Description of contained building block (black boxes)&gt;*
+: _&lt;Description of contained building block (black boxes)&gt;_
 
 Important Interfaces
 
-:   *&lt;Description of important interfaces&gt;*
+: _&lt;Description of important interfaces&gt;_
 
 Insert your explanations of black boxes from level 1:
 
 If you use tabular form you will only describe your black boxes with
 name and responsibility according to the following schema:
 
-| **Name**             | **Responsibility**                           |
-| -------------------- | -------------------------------------------- |
-| Black Box 1          |  *&lt;Text&gt;*                              |
-| Black Box 2          |  *&lt;Text&gt;*                              |
+| **Name**    | **Responsibility** |
+| ----------- | ------------------ |
+| Black Box 1 | _&lt;Text&gt;_     |
+| Black Box 2 | _&lt;Text&gt;_     |
 
 If you use a list of black box descriptions then you fill in a separate
 black box template for every important building block . Its headline is
 the name of the black box.
 
-### &lt;Name black box 1&gt; 
+### &lt;Name black box 1&gt;
 
 Here you describe &lt;black box 1&gt; according the the following black
 box template:
@@ -348,34 +337,33 @@ box template:
 
 -   (Optional) Open issues/problems/risks
 
-*&lt;Purpose/Responsibility&gt;*
+_&lt;Purpose/Responsibility&gt;_
 
-*&lt;Interface(s)&gt;*
+_&lt;Interface(s)&gt;_
 
-*&lt;(Optional) Quality/Performance Characteristics&gt;*
+_&lt;(Optional) Quality/Performance Characteristics&gt;_
 
-*&lt;(Optional) Directory/File Location&gt;*
+_&lt;(Optional) Directory/File Location&gt;_
 
-*&lt;(Optional) Fulfilled Requirements&gt;*
+_&lt;(Optional) Fulfilled Requirements&gt;_
 
-*&lt;(optional) Open Issues/Problems/Risks&gt;*
+_&lt;(optional) Open Issues/Problems/Risks&gt;_
 
-### &lt;Name black box 2&gt; 
+### &lt;Name black box 2&gt;
 
-*&lt;black box template&gt;*
+_&lt;black box template&gt;_
 
-### &lt;Name black box n&gt; 
+### &lt;Name black box n&gt;
 
-*&lt;black box template&gt;*
+_&lt;black box template&gt;_
 
-### &lt;Name interface 1&gt; 
+### &lt;Name interface 1&gt;
 
 …
 
-### &lt;Name interface m&gt; 
+### &lt;Name interface m&gt;
 
-Level 2 
--------
+## Level 2
 
 Here you can specify the inner structure of (some) building blocks from
 level 1 as white boxes.
@@ -386,24 +374,23 @@ over completeness. Specify important, surprising, risky, complex or
 volatile building blocks. Leave out normal, simple, boring or
 standardized parts of your system
 
-### White Box *&lt;building block 1&gt;* 
+### White Box _&lt;building block 1&gt;_
 
-…describes the internal structure of *building block 1*.
+…describes the internal structure of _building block 1_.
 
-*&lt;white box template&gt;*
+_&lt;white box template&gt;_
 
-### White Box *&lt;building block 2&gt;* 
+### White Box _&lt;building block 2&gt;_
 
-*&lt;white box template&gt;*
+_&lt;white box template&gt;_
 
 …
 
-### White Box *&lt;building block m&gt;* 
+### White Box _&lt;building block m&gt;_
 
-*&lt;white box template&gt;*
+_&lt;white box template&gt;_
 
-Level 3 
--------
+## Level 3
 
 Here you can specify the inner structure of (some) building blocks from
 level 2 as white boxes.
@@ -411,22 +398,21 @@ level 2 as white boxes.
 When you need more detailed levels of your architecture please copy this
 part of arc42 for additional levels.
 
-### White Box &lt;\_building block x.1\_&gt; 
+### White Box &lt;\_building block x.1\_&gt;
 
-Specifies the internal structure of *building block x.1*.
+Specifies the internal structure of _building block x.1_.
 
-*&lt;white box template&gt;*
+_&lt;white box template&gt;_
 
-### White Box &lt;\_building block x.2\_&gt; 
+### White Box &lt;\_building block x.2\_&gt;
 
-*&lt;white box template&gt;*
+_&lt;white box template&gt;_
 
-### White Box &lt;\_building block y.1\_&gt; 
+### White Box &lt;\_building block y.1\_&gt;
 
-*&lt;white box template&gt;*
+_&lt;white box template&gt;_
 
-Runtime View 
-============
+# Runtime View
 
 **Contents.**
 
@@ -472,26 +458,21 @@ There are many notations for describing scenarios, e.g.
 
 -   …
 
-&lt;Runtime Scenario 1&gt;
---------------------------
+## &lt;Runtime Scenario 1&gt;
 
--   *&lt;insert runtime diagram or textual description of the
-    scenario&gt;*
+-   _&lt;insert runtime diagram or textual description of the
+    scenario&gt;_
 
--   *&lt;insert description of the notable aspects of the interactions
-    between the building block instances depicted in this diagram.&gt;*
+-   _&lt;insert description of the notable aspects of the interactions
+    between the building block instances depicted in this diagram.&gt;_
 
-&lt;Runtime Scenario 2&gt; 
---------------------------
+## &lt;Runtime Scenario 2&gt;
 
-… {#_}
--
+## … {#\_}
 
-&lt;Runtime Scenario n&gt; 
---------------------------
+## &lt;Runtime Scenario n&gt;
 
-Deployment View 
-===============
+# Deployment View
 
 **Content.**
 
@@ -538,8 +519,7 @@ additional deployment diagrams:
     rather than the deployment diagram, let them use any kind that is
     able to show nodes and channels of the infrastructure.
 
-Infrastructure Level 1 
-----------------------
+## Infrastructure Level 1
 
 Describe (usually in a combination of diagrams, tables, and text):
 
@@ -556,44 +536,42 @@ Describe (usually in a combination of diagrams, tables, and text):
 For multiple environments or alternative deployments please copy that
 section of arc42 for all relevant environments.
 
-***&lt;Overview Diagram&gt;***
+**_&lt;Overview Diagram&gt;_**
 
 Motivation
 
-:   *&lt;explanation in text form&gt;*
+: _&lt;explanation in text form&gt;_
 
 Quality and/or Performance Features
 
-:   *&lt;explanation in text form&gt;*
+: _&lt;explanation in text form&gt;_
 
 Mapping of Building Blocks to Infrastructure
 
-:   *&lt;description of the mapping&gt;*
+: _&lt;description of the mapping&gt;_
 
-Infrastructure Level 2 
-----------------------
+## Infrastructure Level 2
 
 Here you can include the internal structure of (some) infrastructure
 elements from level 1.
 
 Please copy the structure from level 1 for each selected element.
 
-### *&lt;Infrastructure Element 1&gt;* 
+### _&lt;Infrastructure Element 1&gt;_
 
-*&lt;diagram + explanation&gt;*
+_&lt;diagram + explanation&gt;_
 
-### *&lt;Infrastructure Element 2&gt;* 
+### _&lt;Infrastructure Element 2&gt;_
 
-*&lt;diagram + explanation&gt;*
+_&lt;diagram + explanation&gt;_
 
 …
 
-### *&lt;Infrastructure Element n&gt;* 
+### _&lt;Infrastructure Element n&gt;_
 
-*&lt;diagram + explanation&gt;*
+_&lt;diagram + explanation&gt;_
 
-Cross-cutting Concepts 
-======================
+# Cross-cutting Concepts
 
 **Content.**
 
@@ -614,7 +592,7 @@ include many different topics, such as
 
 **Motivation.**
 
-Concepts form the basis for *conceptual integrity* (consistency,
+Concepts form the basis for _conceptual integrity_ (consistency,
 homogeneity) of the architecture. Thus, they are an important
 contribution to achieve inner qualities of your system.
 
@@ -659,25 +637,21 @@ specific topic on this list.
 
 ![Possible topics for crosscutting concepts](images/08-Crosscutting-Concepts-Structure-EN.png)
 
-*&lt;Concept 1&gt;* 
--------------------
+## _&lt;Concept 1&gt;_
 
-*&lt;explanation&gt;*
+_&lt;explanation&gt;_
 
-*&lt;Concept 2&gt;* 
--------------------
+## _&lt;Concept 2&gt;_
 
-*&lt;explanation&gt;*
+_&lt;explanation&gt;_
 
 …
 
-*&lt;Concept n&gt;* 
--------------------
+## _&lt;Concept n&gt;_
 
-*&lt;explanation&gt;*
+_&lt;explanation&gt;_
 
-Design Decisions 
-================
+# Design Decisions
 
 **Contents.**
 
@@ -708,8 +682,7 @@ Various options:
 
 -   ADR (architecture decision record) for every important decision
 
-Quality Requirements 
-====================
+# Quality Requirements
 
 **Content.**
 
@@ -726,8 +699,7 @@ Since quality requirements will have a lot of influence on architectural
 decisions you should know for every stakeholder what is really important
 to them, concrete and measurable.
 
-Quality Tree 
-------------
+## Quality Tree
 
 **Content.**
 
@@ -752,8 +724,7 @@ requirements:
 In any case the tree should include links to the scenarios of the
 following section.
 
-Quality Scenarios 
------------------
+## Quality Scenarios
 
 **Contents.**
 
@@ -789,8 +760,7 @@ evaluated.
 
 Tabular or free form text.
 
-Risks and Technical Debts 
-=========================
+# Risks and Technical Debts
 
 **Contents.**
 
@@ -812,8 +782,7 @@ of the overall risk analysis and measurement planning.
 List of risks and/or technical debts, probably including suggested
 measures to minimize, mitigate or avoid risks or reduce technical debts.
 
-Glossary 
-========
+# Glossary
 
 **Contents.**
 
@@ -837,9 +806,7 @@ A table with columns &lt;Term&gt; and &lt;Definition&gt;.
 
 Potentially more columns in case you need translations.
 
-| Term                              | Definition                        |
-| --------------------------------- | --------------------------------- |
-| Term 1                            | &lt;definition-1&gt;              |
-| Term 2                            | &lt;definition-2&gt;              |
-
-
+| Term   | Definition           |
+| ------ | -------------------- |
+| Term 1 | &lt;definition-1&gt; |
+| Term 2 | &lt;definition-2&gt; |

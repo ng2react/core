@@ -3,4 +3,3 @@ export interface Config {
     output: string
     cwd: string
 }
-

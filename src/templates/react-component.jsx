@@ -5,13 +5,9 @@ const __COMPONENT_NAME__ = ({ __PROPS__ }) => {
 
     __HOOKS__
 
-    return (
-        <>
-            __TEMPLATE__
-        </>
-    );
+    return <>__TEMPLATE__</>
 
     __LOGIC__
-};
+}
 
-export default __COMPONENT_NAME__;
+export default __COMPONENT_NAME__

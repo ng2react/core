@@ -6,16 +6,15 @@ export default function findModule(node: Node): AngularModule | undefined {
     const moduleNode = findModuleNode(node)
     if (moduleNode) {
         const name = (() => {
-            const [arg1,] = moduleNode?.arguments ?? []
+            const [arg1] = moduleNode?.arguments ?? []
             return arg1 && isStringTextContainingNode(arg1) ? arg1.text : undefined
         })()
         return {
             type: 'module',
             name,
-            node: moduleNode
+            node: moduleNode,
         }
     }
-
 
     if (!isExpressionStatement(node.parent)) {
         return undefined
@@ -28,7 +27,7 @@ export default function findModule(node: Node): AngularModule | undefined {
 
     return {
         type: 'module',
-        node: moduleVar
+        node: moduleVar,
     }
 
     function findModuleNode(node: Node): CallExpression | undefined {
@@ -45,5 +44,4 @@ export default function findModule(node: Node): AngularModule | undefined {
             }
         })
     }
-
 }

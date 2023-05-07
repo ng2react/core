@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import './todo-list.css';
+import React, { useState } from 'react'
+import './todo-list.css'
 
 /**
  * This is the same as the TodoList component in todo-list.jsx, but it was
@@ -7,8 +7,8 @@ import './todo-list.css';
  *
  * The only change made was the addition of the "setItems" prop to call back on state change.
  */
-export default function TodoListAi({items, setItems}) {
-    const [newItem, setNewItem] = useState('');
+export default function TodoListAi({ items, setItems }) {
+    const [newItem, setNewItem] = useState('')
 
     return (
         <div className="todoList">
@@ -17,10 +17,7 @@ export default function TodoListAi({items, setItems}) {
                 {items.map((item, index) => (
                     <li key={index}>
                         <span>{item}</span>
-                        <button
-                            className="todoList__deleteItemBtn"
-                            onClick={() => onDeleteItem(index)}
-                        >
+                        <button className="todoList__deleteItemBtn" onClick={() => onDeleteItem(index)}>
                             <i className="las la-minus-circle"></i>
                         </button>
                     </li>
@@ -38,26 +35,24 @@ export default function TodoListAi({items, setItems}) {
                 </button>
             </form>
         </div>
-    );
-
+    )
 
     function onDeleteItem(index) {
-        const updatedItems = [...items];
-        updatedItems.splice(index, 1);
-        setItems({items: updatedItems});
+        const updatedItems = [...items]
+        updatedItems.splice(index, 1)
+        setItems({ items: updatedItems })
     }
 
     function onAddItem(e) {
-        e.preventDefault();
-        const trimmedItem = newItem.trim();
+        e.preventDefault()
+        const trimmedItem = newItem.trim()
         if (!trimmedItem) {
-            return;
+            return
         }
         if (!items.includes(trimmedItem)) {
-            const updatedItems = [...items, trimmedItem];
-            setItems({items: updatedItems});
+            const updatedItems = [...items, trimmedItem]
+            setItems({ items: updatedItems })
         }
-        setNewItem('');
+        setNewItem('')
     }
-
 }
