@@ -87,9 +87,9 @@ function extractMarkdown(response: string) {
 function findNearestDirToPackageJson(filename: string) {
     const parts = filename.split(path.sep)
     for (let i = parts.length - 1; i >= 0; i--) {
-        const path = parts.slice(0, i).join('/')
-        if (fs.existsSync(path + '/package.json')) {
-            return `${path}/${parts[i + 1]}` // add the last part back
+        const currentPath = parts.slice(0, i).join(path.sep)
+        if (fs.existsSync(path.join(currentPath, 'package.json'))) {
+            return path.join(currentPath, parts[i]) // add the last part back
         }
     }
     throw Error(
