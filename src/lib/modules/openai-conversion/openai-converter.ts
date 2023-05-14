@@ -1,7 +1,8 @@
 import {Configuration, OpenAIApi} from 'openai'
 import Ng2ReactConverter, {Ng2ReactConversionResult} from './Ng2ReactConverter'
 import type {AngularComponent} from '../../model/AngularEntity'
-import {buildCompletionPrompt, buildGptMessage, processResponse} from './prompt-construction/gpt-prompt-builder'
+import {buildCompletionPrompt, buildGptMessage} from './prompt-construction/gpt-prompt-builder'
+import processResponse from './process-response'
 
 export type OpenAIOptions = {
     readonly apiKey: string,

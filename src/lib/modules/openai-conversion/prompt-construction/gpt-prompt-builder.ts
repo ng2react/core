@@ -1,9 +1,12 @@
-import {AngularComponent} from '../../../model/AngularEntity'
-import findTemplate, {AngularTemplate} from './find-template'
+import { AngularComponent } from '../../../model/AngularEntity'
+import findTemplate, { AngularTemplate } from './find-template'
 import resolveTemplateUrl from './resolve-template-url'
-import type {ChatCompletionRequestMessage} from 'openai'
+import type { ChatCompletionRequestMessage } from 'openai'
 import path from 'path'
 import fs from 'fs'
+
+export const CODE_START = '// ___NG2R_START___'
+export const CODE_END = '// ___NG2R_STOP___'
 
 export function buildGptMessage(component: AngularComponent, sourcesRoot: string | undefined) {
     const template = findTemplate(component)
@@ -11,7 +14,9 @@ export function buildGptMessage(component: AngularComponent, sourcesRoot: string
     return [
         {
             role: 'user',
-            content: buildRules()
+            content: buildRules({
+                isTs: component.node.getSourceFile().fileName.endsWith('.ts')
+            })
         },
         ...buildCode('component', component, sourcesRoot, template)
     ] satisfies ChatCompletionRequestMessage[]
@@ -57,40 +62,22 @@ function buildCode(type: 'component', component: AngularComponent, sourcesRoot: 
     ] satisfies ChatCompletionRequestMessage[]
 }
 
-function buildRules() {
+function buildRules({ isTs }: { isTs: boolean }) {
     const promptLines = [
         'Please convert the following AngularJS component to a functional React element.',
         ' * You should explain any assumptions you have made and highlight any potential issues.',
-        ' * So that I can programmatically find your code, please top and tail it with "// ___NG2R_START___" and "// ___NG2R_STOP___"'
+        ` * So that I can programmatically find your code, please top and tail it with "${CODE_START}" and "${CODE_END}"`,
     ]
+    if (isTs) {
+        promptLines.push(' * Please use TypeScript')
+    }
     return promptLines.join('\n')
 }
 
-export function buildCompletionPrompt(component: AngularComponent, sourcesRoot: string|undefined): string {
+export function buildCompletionPrompt(component: AngularComponent, sourcesRoot: string | undefined): string {
     return `#AngularJS to React:\nAngularJS:\n${component.node.getText()}\nReact:\n`
 }
 
-export function processResponse(response: string) {
-    return {
-        jsx: extractJsx(response),
-        markdown: extractMarkdown(response)
-    }
-}
-
-function extractJsx(markdown: string) {
-    return /(?<=\/\/ ___NG2R_START___\n)[\s\S]*?(?=\/\/ ___NG2R_STOP___)/.exec(markdown)?.[0] ?? ''
-}
-
-function extractMarkdown(response: string) {
-    response = response.replaceAll(/\/\/ (___NG2R_START___|___NG2R_STOP___)/g, '')
-    if (response.includes('```')) {
-        // Assume is markdown
-        return response
-    } else {
-        // Assume is plaintext
-        return '```jsx\n' + response + '\n```'
-    }
-}
 
 
 function findNearestDirToPackageJson(filename: string) {
