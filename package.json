@@ -10,6 +10,9 @@
         "import": "./dist/esm/api/main.js",
         "types": "./dist/types/api/main.d.ts"
     },
+    "imports": {
+        "#prompt-template.md": "./src/templates/prompt-template.md"
+    },
     "files": [
         "dist",
         "src/lib/**/*.ts",

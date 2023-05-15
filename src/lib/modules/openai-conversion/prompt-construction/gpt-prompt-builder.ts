@@ -9,7 +9,7 @@ import { TEMPLATE_DIR } from '../../../constants'
 export const CODE_START = '// ___NG2R_START___'
 export const CODE_END = '// ___NG2R_END___'
 
-export const TPL_PATH = path.join(TEMPLATE_DIR, 'prompt-template.md')
+export const TPL_PATH = require.resolve('#prompt-template.md')
 
 export function buildGptMessage(component: AngularComponent, sourcesRoot: string | undefined) {
     const template = findTemplate(component)
