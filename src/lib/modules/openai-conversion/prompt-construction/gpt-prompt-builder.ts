@@ -4,23 +4,23 @@ import resolveTemplateUrl from './resolve-template-url'
 import type { ChatCompletionRequestMessage } from 'openai'
 import path from 'path'
 import fs from 'fs'
-import { TEMPLATE_DIR } from '../../../constants'
+import PROMPT_TEMPLATE from '../../../generated/prompt-template'
 
 export const CODE_START = '// ___NG2R_START___'
 export const CODE_END = '// ___NG2R_END___'
-
-export const TPL_PATH = require.resolve('#prompt-template.md')
 
 export function buildGptMessage(component: AngularComponent, sourcesRoot: string | undefined) {
     const template = findTemplate(component)
     sourcesRoot ??= findNearestDirToPackageJson(component.node.getSourceFile().fileName)
 
-    const promprtTemplate = fs.readFileSync(TPL_PATH, 'utf8')
     const [code, language] = buildCode('component', component, sourcesRoot, template)
+
+    const prompt = PROMPT_TEMPLATE.replace('${LANGUAGE}', language).replace('${COMPONENT}', code)
+
     return [
         {
             role: 'user',
-            content: promprtTemplate.replace('${LANGUAGE}', language).replace('${COMPONENT}', code),
+            content: prompt,
         },
     ] satisfies ChatCompletionRequestMessage[]
 }

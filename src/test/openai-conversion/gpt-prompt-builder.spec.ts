@@ -28,7 +28,7 @@ describe('Given a source file that has a Typescript extension', () => {
         prompt = buildGptMessage(component, 'src')
     })
     it('Then the prompt specifies Typescript should be generated', () => {
-        expect(prompt[0].content).toContain(' - The output should be in Typescript')
+        expect(prompt[0].content).toContain('The output should be in Typescript')
     })
 })
 

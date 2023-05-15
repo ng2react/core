@@ -1,6 +1,6 @@
 {
     "name": "@ng2react/core",
-    "version": "1.2.0-rc.1",
+    "version": "1.2.0-rc.3",
     "description": "Convert AngularJS 1.x components to React components",
     "main": "./dist/cjs/api/main.js",
     "module": "./dist/esm/api/main.js",
@@ -11,21 +11,22 @@
         "types": "./dist/types/api/main.d.ts"
     },
     "imports": {
-        "#prompt-template.md": "./src/templates/prompt-template.md"
+        "#prompt-template.md": "./assets/prompt-template.md"
     },
     "files": [
         "dist",
         "src/lib/**/*.ts",
-        "src/templates"
+        "assets"
     ],
     "scripts": {
         "preversion": "npm run lint && npm run test && npm run build",
         "prepublishOnly": "npm run build",
-        "prebuild": "rimraf dist",
+        "prebuild": "rimraf dist && npm run bundleAssets",
+        "bundleAssets": "node ./src/build/bundle-assets.js",
         "build": "npm run build-cjs && npm run build-esm",
         "build-esm": "tsc --build ./src/lib/tsconfig.json",
         "build-cjs": "tsc --build ./src/lib/tsconfig.cjs.json",
-        "test": "jest",
+        "test": "npm run bundleAssets && jest",
         "lint": "eslint **/*.ts"
     },
     "repository": {
