@@ -20,10 +20,8 @@ export function buildGptMessage(component: AngularComponent, sourcesRoot: string
     return [
         {
             role: 'user',
-            content: promprtTemplate
-                .replace('${LANGUAGE}', language)
-                .replace('${COMPONENT}', code)
-        }
+            content: promprtTemplate.replace('${LANGUAGE}', language).replace('${COMPONENT}', code),
+        },
     ] satisfies ChatCompletionRequestMessage[]
 }
 
@@ -33,7 +31,7 @@ function buildCode(type: 'component', component: AngularComponent, sourcesRoot: 
         'Here is the AngularJS component:',
         `\`\`\`${language.toLowerCase()}`,
         component.node.getText(),
-        '```'
+        '```',
     ]
 
     if (template.resolution === 'inline') {
@@ -43,15 +41,10 @@ function buildCode(type: 'component', component: AngularComponent, sourcesRoot: 
     const html = resolveTemplateUrl({
         sourcesRoot,
         filePath: component.node.getSourceFile().fileName,
-        templateUrl: template.path
+        templateUrl: template.path,
     })
 
-    componentPrompt.push('',
-        'Here is the html template:',
-        '```html',
-        html,
-        '```'
-    )
+    componentPrompt.push('', 'Here is the html template:', '```html', html, '```')
 
     return [componentPrompt.join('\n'), language] as const
 }
@@ -59,8 +52,6 @@ function buildCode(type: 'component', component: AngularComponent, sourcesRoot: 
 export function buildCompletionPrompt(component: AngularComponent, sourcesRoot: string | undefined): string {
     return `#AngularJS to React:\nAngularJS:\n${component.node.getText()}\nReact:\n`
 }
-
-
 
 function findNearestDirToPackageJson(filename: string) {
     const parts = filename.split(path.sep)
@@ -70,6 +61,8 @@ function findNearestDirToPackageJson(filename: string) {
             return `${path}/${parts[i + 1]}` // add the last part back
         }
     }
-    throw Error(`Could not find package.json in ${filename} or any of its parent directories.` +
-        ' Try explicitly setting the project root.')
+    throw Error(
+        `Could not find package.json in ${filename} or any of its parent directories.` +
+            ' Try explicitly setting the project root.'
+    )
 }

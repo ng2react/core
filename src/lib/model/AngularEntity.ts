@@ -1,9 +1,9 @@
-import type {CallExpression, Node} from 'typescript'
+import type { CallExpression, Node } from 'typescript'
 
 export type AngularComponent = Readonly<{
     type: 'component'
     name: string
-    node: CallExpression,
+    node: CallExpression
     module?: AngularModule
 }>
 

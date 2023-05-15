@@ -1,3 +1,14 @@
 #! /bin/bash
 
 npx prettier --write .
+
+# Get list of staged files
+staged_files=$(git diff --cached --name-only --diff-filter=ACMR)
+
+# Run Prettier on the staged files and add them to the staging area
+for file in $staged_files; do
+  if [ -e "$file" ]; then
+    # npx prettier --write "$file"
+    git add "$file"
+  fi
+done

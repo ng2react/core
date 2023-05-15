@@ -1,2 +1,1 @@
-
-export {getConverter} from './openai-converter'
+export { getConverter } from './openai-converter'

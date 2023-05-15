@@ -1,29 +1,28 @@
 class TodoListCtrl {
     constructor() {
-        this.items = [];
+        this.items = []
     }
     onDeleteItem(index) {
-        this.items.splice(index, 1);
+        this.items.splice(index, 1)
     }
     onAddItem() {
-        this.newItem = this.newItem?.trim();
+        this.newItem = this.newItem?.trim()
         if (!this.newItem) {
-            return;
+            return
         }
         if (!this.items.includes(this.newItem)) {
-            this.items.push(this.newItem);
+            this.items.push(this.newItem)
         }
-        this.newItem = '';
+        this.newItem = ''
     }
 }
 
-angular.module('componentWithClassCtrlModule', [])
-    .component('componentWithClassCtrl', {
-        controller: TodoListCtrl,
-        bindings: {
-            items: '<',
-        },
-        template: `
+angular.module('componentWithClassCtrlModule', []).component('componentWithClassCtrl', {
+    controller: TodoListCtrl,
+    bindings: {
+        items: '<',
+    },
+    template: `
 <div class="todoList">
   <h1>Todo List</h1>
   <dl class="todoList__items">
@@ -36,5 +35,5 @@ angular.module('componentWithClassCtrlModule', [])
     <button type="submit" class="todoList__addItemBtn"><i class="las la-plus-circle"></i></button>
     </form>
 </div>
-`
-    })
+`,
+})
