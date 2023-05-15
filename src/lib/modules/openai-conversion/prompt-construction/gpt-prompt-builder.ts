@@ -4,37 +4,40 @@ import resolveTemplateUrl from './resolve-template-url'
 import type { ChatCompletionRequestMessage } from 'openai'
 import path from 'path'
 import fs from 'fs'
+import { TEMPLATE_DIR } from '../../../constants'
 
 export const CODE_START = '// ___NG2R_START___'
-export const CODE_END = '// ___NG2R_STOP___'
+export const CODE_END = '// ___NG2R_END___'
+
+export const TPL_PATH = path.join(TEMPLATE_DIR, 'prompt-template.md')
 
 export function buildGptMessage(component: AngularComponent, sourcesRoot: string | undefined) {
     const template = findTemplate(component)
     sourcesRoot ??= findNearestDirToPackageJson(component.node.getSourceFile().fileName)
+
+    const promprtTemplate = fs.readFileSync(TPL_PATH, 'utf8')
+    const [code, language] = buildCode('component', component, sourcesRoot, template)
     return [
         {
             role: 'user',
-            content: buildRules({
-                isTs: component.node.getSourceFile().fileName.endsWith('.ts')
-            })
-        },
-        ...buildCode('component', component, sourcesRoot, template)
+            content: promprtTemplate
+                .replace('${LANGUAGE}', language)
+                .replace('${COMPONENT}', code)
+        }
     ] satisfies ChatCompletionRequestMessage[]
 }
 
 function buildCode(type: 'component', component: AngularComponent, sourcesRoot: string, template: AngularTemplate) {
+    const language = component.node.getSourceFile().fileName.endsWith('.ts') ? 'Typescript' : 'JavaScript'
     const componentPrompt = [
         'Here is the AngularJS component:',
-        '```ts',
+        `\`\`\`${language.toLowerCase()}`,
         component.node.getText(),
         '```'
-    ].join('\n')
+    ]
 
     if (template.resolution === 'inline') {
-        return [{
-            role: 'user',
-            content: componentPrompt
-        }] satisfies ChatCompletionRequestMessage[]
+        return [componentPrompt.join('\n'), language] as const
     }
 
     const html = resolveTemplateUrl({
@@ -43,35 +46,14 @@ function buildCode(type: 'component', component: AngularComponent, sourcesRoot: 
         templateUrl: template.path
     })
 
-    const templatePrompt = [
+    componentPrompt.push('',
         'Here is the html template:',
         '```html',
         html,
         '```'
-    ].join('\n')
+    )
 
-    return [
-        {
-            role: 'user',
-            content: componentPrompt
-        },
-        {
-            role: 'user',
-            content: templatePrompt
-        }
-    ] satisfies ChatCompletionRequestMessage[]
-}
-
-function buildRules({ isTs }: { isTs: boolean }) {
-    const promptLines = [
-        'Please convert the following AngularJS component to a functional React element.',
-        ' * You should explain any assumptions you have made and highlight any potential issues.',
-        ` * So that I can programmatically find your code, please top and tail it with "${CODE_START}" and "${CODE_END}"`,
-    ]
-    if (isTs) {
-        promptLines.push(' * Please use TypeScript')
-    }
-    return promptLines.join('\n')
+    return [componentPrompt.join('\n'), language] as const
 }
 
 export function buildCompletionPrompt(component: AngularComponent, sourcesRoot: string | undefined): string {

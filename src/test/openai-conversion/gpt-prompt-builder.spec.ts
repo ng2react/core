@@ -29,7 +29,7 @@ describe('Given a source file that has a Typescript extension', () => {
 
     })
     it('Then the prompt specifies Typescript should be generated', () => {
-        expect(prompt[0].content).toContain('* Please use TypeScript')
+        expect(prompt[0].content).toContain(' - The output should be in Typescript')
     })
 })
 

@@ -1,6 +1,6 @@
 {
   "name": "@ng2react/core",
-  "version": "1.1.0-rc.0",
+  "version": "1.2.0-rc",
   "description": "Convert AngularJS 1.x components to React components",
   "main": "./dist/cjs/api/main.js",
   "module": "./dist/esm/api/main.js",
@@ -12,7 +12,8 @@
   },
   "files": [
     "dist",
-    "src/lib/**/*.ts"
+    "src/lib/**/*.ts",
+    "src/templates"
   ],
   "scripts": {
     "preversion": "npm run lint && npm run test && npm run build",
@@ -37,6 +38,7 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "openai": "^3.2.1",
+    "prettier": "^2.8.8",
     "tslog": "^4.8.2",
     "typescript": "^5.0.4"
   },
