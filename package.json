@@ -11,7 +11,7 @@
         "types": "./dist/types/api/main.d.ts"
     },
     "imports": {
-        "#prompt-template.md": "./assets/prompt-template.md"
+        "#prompt-template.md": "./src/assets/prompt-template.md"
     },
     "files": [
         "dist",
@@ -22,7 +22,7 @@
         "preversion": "npm run lint && npm run test && npm run build",
         "prepublishOnly": "npm run build",
         "prebuild": "rimraf dist && npm run bundleAssets",
-        "bundleAssets": "node ./src/build/bundle-assets.js",
+        "bundleAssets": "node ./src/assets/bundle.cjs",
         "build": "npm run build-cjs && npm run build-esm",
         "build-esm": "tsc --build ./src/lib/tsconfig.json",
         "build-cjs": "tsc --build ./src/lib/tsconfig.cjs.json",

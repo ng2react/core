@@ -4,4 +4,4 @@ coverage
 
 # Ignore all HTML files:
 *.html
-src/templates
+*.md

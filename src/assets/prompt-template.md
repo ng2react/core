@@ -108,9 +108,9 @@ const StateBindingExample = ({ oneWayBinding: initialOneWayBinding, readOnlyOneW
 
 ```jsx
 const ServiceInjectionExample = ({}) => {
-    const myService = useService < MyService > 'myService'
+    const myService = useService('myService')
     // Assumption: New non-angular service called 'httpService' can be used instead of '$http'
-    const httpService = useService < HttpService > 'httpService'
+    const httpService = useService('httpService')
 
     return <>...</>
 }
