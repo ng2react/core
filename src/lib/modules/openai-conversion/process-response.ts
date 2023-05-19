@@ -1,9 +1,7 @@
-
-
 export default function processResponse(response: string) {
     return {
         jsx: extractJsx(response),
-        markdown: extractMarkdown(response)
+        markdown: extractMarkdown(response),
     }
 }
 

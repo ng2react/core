@@ -1,35 +1,34 @@
-import angular from 'angular';
+import angular from 'angular'
 import './todo-list.css'
 
 class TodoListCtrl {
     constructor() {
-        this.items = [];
+        this.items = []
     }
     /**
-     * 
-     * @param {number} index 
+     *
+     * @param {number} index
      */
     onDeleteItem(index) {
-        this.items.splice(index, 1);
+        this.items.splice(index, 1)
     }
 
     onAddItem() {
-        this.newItem = this.newItem?.trim();
+        this.newItem = this.newItem?.trim()
         if (!this.newItem) {
-            return;
+            return
         }
         if (!this.items.includes(this.newItem)) {
-            this.items.push(this.newItem);
+            this.items.push(this.newItem)
         }
-        this.newItem = '';
+        this.newItem = ''
     }
 }
 
-angular.module('todoList', [])
-    .component('todoList', {
-        controller: TodoListCtrl,
-        templateUrl: 'todo-list.html',
-        bindings: {
-            items: '<',
-        }
-    })
+angular.module('todoList', []).component('todoList', {
+    controller: TodoListCtrl,
+    templateUrl: 'todo-list.html',
+    bindings: {
+        items: '<',
+    },
+})

@@ -1,10 +1,9 @@
-import {MultipleComponents} from './test-data'
-import {AngularComponent} from '../lib/model/AngularEntity'
+import { MultipleComponents } from './test-data'
+import { AngularComponent } from '../lib/model/AngularEntity'
 import findComponentsInNode from '../lib/modules/parsing/find-components-in-node'
 import createAst from '../lib/modules/parsing/create-ast'
 
 describe('Given an array of angular modules When findComponents is called', () => {
-
     let components: readonly AngularComponent[]
     beforeAll(() => {
         const ast = createAst(MultipleComponents.path, MultipleComponents.content)

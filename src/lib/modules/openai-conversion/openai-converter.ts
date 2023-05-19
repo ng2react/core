@@ -1,13 +1,13 @@
-import {Configuration, OpenAIApi} from 'openai'
-import Ng2ReactConverter, {Ng2ReactConversionResult} from './Ng2ReactConverter'
-import type {AngularComponent} from '../../model/AngularEntity'
-import {buildCompletionPrompt, buildGptMessage} from './prompt-construction/gpt-prompt-builder'
+import { Configuration, OpenAIApi } from 'openai'
+import Ng2ReactConverter, { Ng2ReactConversionResult } from './Ng2ReactConverter'
+import type { AngularComponent } from '../../model/AngularEntity'
+import { buildCompletionPrompt, buildGptMessage } from './prompt-construction/gpt-prompt-builder'
 import processResponse from './process-response'
 
 export type OpenAIOptions = {
-    readonly apiKey: string,
-    readonly model: Completion | Gpt,
-    readonly organization: string | undefined,
+    readonly apiKey: string
+    readonly model: Completion | Gpt
+    readonly organization: string | undefined
     /**
      * The temperature to use when generating completions. Higher values result in more random completions.
      * Must be between 0 and 2.
@@ -24,10 +24,16 @@ type Version = '1' | '2' | '3'
 type Completion = `text-${'davinci' | 'curie' | 'babbage' | 'ada'}-00${Version}`
 type Gpt = `gpt-${'3-turbo' | '4'}`
 
-export function getConverter({apiKey, organization, model, sourceRoot, temperature}: OpenAIOptions): Ng2ReactConverter {
+export function getConverter({
+    apiKey,
+    organization,
+    model,
+    sourceRoot,
+    temperature,
+}: OpenAIOptions): Ng2ReactConverter {
     const configuration = new Configuration({
         apiKey,
-        organization
+        organization,
     })
     const openai = new OpenAIApi(configuration)
     if (isGpt(model)) {
@@ -44,14 +50,13 @@ export function getConverter({apiKey, organization, model, sourceRoot, temperatu
                 const response = await openai.createChatCompletion({
                     model,
                     messages: buildGptMessage(component, sourceRoot),
-                    temperature
+                    temperature,
                 })
                 const results = response.data.choices
-                    .map(c => c.message?.content)
-                    .filter(m => m !== undefined) as string[]
-                return results
-                    .map(processResponse) satisfies Ng2ReactConversionResult[]
-            }
+                    .map((c) => c.message?.content)
+                    .filter((m) => m !== undefined) as string[]
+                return results.map(processResponse) satisfies Ng2ReactConversionResult[]
+            },
         } satisfies Ng2ReactConverter
     }
 
@@ -62,14 +67,13 @@ export function getConverter({apiKey, organization, model, sourceRoot, temperatu
                     model,
                     prompt: buildCompletionPrompt(component, sourceRoot),
                     temperature: 0,
-                    max_tokens: 2048
+                    max_tokens: 2048,
                 })
                 const results = response.data.choices
-                    .map(c => c.text)
-                    .filter(text => text !== undefined) as string[]
-                return results
-                    .map(processResponse) satisfies Ng2ReactConversionResult[]
-            }
+                    .map((c) => c.text)
+                    .filter((text) => text !== undefined) as string[]
+                return results.map(processResponse) satisfies Ng2ReactConversionResult[]
+            },
         } satisfies Ng2ReactConverter
     }
 
@@ -81,4 +85,3 @@ export function getConverter({apiKey, organization, model, sourceRoot, temperatu
         return model.startsWith('text-')
     }
 }
-

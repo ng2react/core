@@ -1,4 +1,4 @@
-import {Logger} from 'tslog'
+import { Logger } from 'tslog'
 
 let logLevel = (() => {
     if (process.argv.includes('--quiet')) {
@@ -9,7 +9,7 @@ let logLevel = (() => {
     }
     return 4
 })()
-const logger = new Logger<void>({minLevel: logLevel})
+const logger = new Logger<void>({ minLevel: logLevel })
 
 export function setLogLevel(level: 'quiet' | 'verbose' | 'normal') {
     switch (level) {
@@ -27,5 +27,5 @@ export function setLogLevel(level: 'quiet' | 'verbose' | 'normal') {
 }
 
 export default function getLogger(name: string) {
-    return logger.getSubLogger({name, minLevel: logLevel})
+    return logger.getSubLogger({ name, minLevel: logLevel })
 }
