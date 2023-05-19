@@ -7,3 +7,4 @@
 /docs/build
 **/Thumbs.db
 **/.idea
+**/generated/**/*.ts
