@@ -1,7 +1,7 @@
 # angularjs2react
 
 Architectural documentation: [./docs/documentation.md](./docs/documentation.md)
-![angularjs2react](./docs/diagrams/structurizr-1-Ng2React_CLI.png)
+![angularjs2react](./.docs/images/structurizr-1-Ng2React_CLI.png)
 
 ## Description
 
