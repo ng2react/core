@@ -6,11 +6,11 @@ export default function processResponse(response: string) {
 }
 
 function extractJsx(markdown: string) {
-    return /(?<=\/\/ ___NG2R_START___\n)[\s\S]*?(?=\/\/ ___NG2R_STOP___)/.exec(markdown)?.[0] ?? ''
+    return /(?<=\/\/ ___NG2R_START___\n)[\s\S]*?(?=\/\/ ___NG2R_END___)/.exec(markdown)?.[0] ?? ''
 }
 
 function extractMarkdown(response: string) {
-    response = response.replaceAll(/\/\/ (___NG2R_START___|___NG2R_STOP___)/g, '')
+    response = response.replaceAll(/\/\/ (___NG2R_START___|___NG2R_END___)/g, '')
     if (response.includes('```')) {
         // Assume is markdown
         return response
