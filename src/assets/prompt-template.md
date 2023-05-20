@@ -1,33 +1,46 @@
 I want you to convert an AngularJS component into a functional React component.
 
-## General Rules:
+## Code presentation:
+- So that I can programmatically find your code, please top and tail it with `// ___NG2R_START___`
+  and `// ___NG2R_END___`,
+- The output should be in ${LANGUAGE}
+- Annotations:
+  - Add inline comments explaining assumptions you have made
+  - Add inline comments highlighting potential issues
+- For assumptions/issues that are more general, you may add these outside of the code snippet
 
--   You should explain any assumptions you have made
--   Highlight any potential issues
--   So that I can programmatically find your code, please top and tail it with `// ___NG2R_START___` and `// ___NG2R_END___`,
--   The output should be in ${LANGUAGE}
+### Example Input
+```javascript
+angularjs.module("myApp", [])
+    .component("myComponent", {
+      template: '<div><h1>Title: {{myProp}}</h1><ng-transclude/></div>',
+      bindings: {
+          myProp: "<",
+          transclude: true
+      }
+    })
+```
 
-**Example Response**
+### Example Response
+
+**Potential Issues:**
+- The AngularJS component uses the transclude functionality. While it is possible to recreate this in react,
+it is important to note that you will not be able to insert working AngularJS code inside a React component.
 
 ```jsx
 // ___NG2R_START___
 
 import React from 'react'
 
-// Assumption 1: One-way bindings should be converted to read-only elements, as they are not meant to be modified by the user.
-
-const MyComponent = ({ myProp }) => {
+// Assumption: Since myProp is a 1-way binding, I am assuming its state is managed by the parent
+const MyComponent = ({myProp, children}) => {
     return (
         <div>
             <h1>Title: {myProp}</h1>
+          {children}
         </div>
     )
 }
-
-/**
- * Potential issues:
- * 1. Since AngularJS uses two-way data binding by default, converting to React requires handling state updates manually. This can lead to more complex code and potential issues if not handled correctly.
- */
 
 // ___NG2R_END___
 ```
@@ -38,14 +51,14 @@ I want you to deal with certain code patterns in a specific way. Here are the pa
 
 ### Pattern 1: Two-way bindings
 
--   Assume that state is managed by the parent component
--   Assume that the parent component will pass down a callback function to update the state
--   Do not use `useState` to manage state locally
+- Assume that state is managed by the parent component
+- Assume that the parent component will pass down a callback function to update the state
+- Do not use `useState` to manage state locally
 
-**Example:**
+#### Example Response:
 
 ```jsx
-const StateBindingExample = ({ twoWayBinding, onTwoWayBindingChange }) => {
+const StateBindingExample = ({twoWayBinding, onTwoWayBindingChange}) => {
     const handleTwoWayBindingChange = (e) => {
         onTwoWayBindingChange(e.target.checked)
     }
@@ -53,7 +66,7 @@ const StateBindingExample = ({ twoWayBinding, onTwoWayBindingChange }) => {
     return (
         <div>
             <label>
-                2-Way Binding <input type="checkbox" checked={twoWayBinding} onChange={handleTwoWayBindingChange} />
+                2-Way Binding <input type="checkbox" checked={twoWayBinding} onChange={handleTwoWayBindingChange}/>
             </label>
         </div>
     )
@@ -62,13 +75,14 @@ const StateBindingExample = ({ twoWayBinding, onTwoWayBindingChange }) => {
 
 ### Pattern 2: One-way bindings / String Bindings
 
--   If the value does not appear to be modifyed, assume that it is read-only; otherwise
--   Create a local state variable using `useState` and update it using `useEffect` declaring the initial state as a dependency
+- If the value does not appear to be modified, assume that it is read-only; otherwise
+- Create a local state variable using `useState` and update it using `useEffect` declaring the initial state as a
+  dependency
 
-**Example:**
+#### Example Response:
 
 ```jsx
-const StateBindingExample = ({ oneWayBinding: initialOneWayBinding, readOnlyOneWayBinding }) => {
+const StateBindingExample = ({oneWayBinding: initialOneWayBinding, readOnlyOneWayBinding}) => {
     const [oneWayBinding, setOneWayBinding] = useState(initialOneWayBinding)
 
     useEffect(() => {
@@ -89,7 +103,7 @@ const StateBindingExample = ({ oneWayBinding: initialOneWayBinding, readOnlyOneW
             </div>
             <div>
                 <label>
-                    Readonly 1-Way Binding <input type="checkbox" checked={readOnlyOneWayBinding} readOnly />
+                    Readonly 1-Way Binding <input type="checkbox" checked={readOnlyOneWayBinding} readOnly/>
                 </label>
             </div>
         </div>
@@ -99,12 +113,14 @@ const StateBindingExample = ({ oneWayBinding: initialOneWayBinding, readOnlyOneW
 
 ### Pattern 3: Service Injection
 
--   If the service name starts with a `$`:
-    -   Assume that it is a built-in AngularJS service
-    -   Assume that a non-angular equivalent is available
--   Use a custom hook called `useService` to inject the service
+- If the service name starts with a `$`:
+    - Assume that it is a built-in AngularJS service
+    - Assume that a non-angular equivalent is available
+- Use a custom hook called `useService` to inject the service
 
-**Example:**
+#### Example Response
+- I have assumed that a custom hook called `useService` is available
+- It is a bad idea to import AngularJS services directly into React so I have assumed that a wrapper for `$http` called `httpService` will be available
 
 ```jsx
 const ServiceInjectionExample = ({}) => {
@@ -130,10 +146,15 @@ angular.module('myApp').component('myComponent', {
 ```
 
 ```jsx
-const RequireControllerExample = ({ myController }) => {
+const RequireControllerExample = ({myController}) => {
     return <>...</>
 }
 ```
+
+### Any other patterns
+Finally: 
+- If you encounter any other patterns, not described above, please do your best to migrate them into the React component.
+- If a particular pattern seems unworkable, just do your best and include comments explaining your concerns.
 
 ## The AngularJS Component:
 
