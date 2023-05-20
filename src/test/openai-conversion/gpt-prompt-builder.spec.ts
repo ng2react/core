@@ -7,6 +7,11 @@ jest.mock('../../lib/modules/openai-conversion/prompt-construction/find-template
     default: jest.fn(() => ({ resolution: 'inline' })),
 }))
 
+jest.mock('../../lib/modules/openai-conversion/prompt-construction/find-controller', () => ({
+    __esModule: true,
+    default: jest.fn(() => ({ resolution: 'inline' })),
+}))
+
 function mockComponent({ ex = 'js' as 'js' | 'ts' }) {
     return {
         name: '',

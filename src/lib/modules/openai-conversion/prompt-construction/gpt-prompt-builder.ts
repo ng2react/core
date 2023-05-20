@@ -5,15 +5,18 @@ import type { ChatCompletionRequestMessage } from 'openai'
 import path from 'path'
 import fs from 'fs'
 import PROMPT_TEMPLATE from '../../../generated/prompt-template'
+import findController, { ComponentController } from './find-controller'
 
 export const CODE_START = '// ___NG2R_START___'
 export const CODE_END = '// ___NG2R_END___'
 
 export function buildGptMessage(component: AngularComponent, sourcesRoot: string | undefined) {
     const template = findTemplate(component)
+    const controller = findController(component)
+
     sourcesRoot ??= findNearestDirToPackageJson(component.node.getSourceFile().fileName)
 
-    const [code, language] = buildCode('component', component, sourcesRoot, template)
+    const [code, language] = buildCode('component', component, sourcesRoot, template, controller)
 
     const prompt = PROMPT_TEMPLATE.replace('${LANGUAGE}', language).replace('${COMPONENT}', code)
 
@@ -25,7 +28,13 @@ export function buildGptMessage(component: AngularComponent, sourcesRoot: string
     ] satisfies ChatCompletionRequestMessage[]
 }
 
-function buildCode(type: 'component', component: AngularComponent, sourcesRoot: string, template: AngularTemplate) {
+function buildCode(
+    type: 'component',
+    component: AngularComponent,
+    sourcesRoot: string,
+    template: AngularTemplate,
+    controller: ComponentController
+) {
     const language = component.node.getSourceFile().fileName.endsWith('.ts') ? 'Typescript' : 'JavaScript'
     const componentPrompt = [
         'Here is the AngularJS component:',
@@ -34,17 +43,20 @@ function buildCode(type: 'component', component: AngularComponent, sourcesRoot: 
         '```',
     ]
 
-    if (template.resolution === 'inline') {
-        return [componentPrompt.join('\n'), language] as const
+    if (controller.resolution === 'node') {
+        const controllerCode = controller.node.getText()
+        componentPrompt.push('', 'Here is the controller:', '```js', controllerCode, '```', '')
     }
 
-    const html = resolveTemplateUrl({
-        sourcesRoot,
-        filePath: component.node.getSourceFile().fileName,
-        templateUrl: template.path,
-    })
+    if (template.resolution !== 'inline') {
+        const html = resolveTemplateUrl({
+            sourcesRoot,
+            filePath: component.node.getSourceFile().fileName,
+            templateUrl: template.path,
+        })
 
-    componentPrompt.push('', 'Here is the html template:', '```html', html, '```')
+        componentPrompt.push('', 'Here is the html template:', '```html', html, '```')
+    }
 
     return [componentPrompt.join('\n'), language] as const
 }
