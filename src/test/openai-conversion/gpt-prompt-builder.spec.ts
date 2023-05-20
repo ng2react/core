@@ -22,24 +22,24 @@ function mockComponent({ ex = 'js' as 'js' | 'ts' }) {
 
 describe('Given a source file that has a Typescript extension', () => {
     let component: AngularComponent
-    let prompt: ReturnType<typeof buildGptMessage>
+    let prompt: string
     beforeAll(() => {
         component = mockComponent({ ex: 'ts' })
-        prompt = buildGptMessage(component, 'src')
+        prompt = buildGptMessage(component, 'src').prompt
     })
     it('Then the prompt specifies Typescript should be generated', () => {
-        expect(prompt[0].content).toContain('The output should be in Typescript')
+        expect(prompt).toContain('The output should be in Typescript')
     })
 })
 
 describe('Given a source file that has a JavaScript extension', () => {
     let component: AngularComponent
-    let prompt: ReturnType<typeof buildGptMessage>
+    let prompt: string
     beforeAll(() => {
         component = mockComponent({ ex: 'js' })
-        prompt = buildGptMessage(component, 'src')
+        prompt = buildGptMessage(component, 'src').prompt
     })
     it('Then the prompt does not specify Typescript should be generated', () => {
-        expect(prompt[0].content).not.toContain('* Please use TypeScript')
+        expect(prompt).not.toContain('* Please use TypeScript')
     })
 })
