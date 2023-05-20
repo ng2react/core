@@ -1,14 +1,10 @@
 import { AngularComponent } from '../../../model/AngularEntity'
 import findTemplate, { AngularTemplate } from './find-template'
 import resolveTemplateUrl from './resolve-template-url'
-import type { ChatCompletionRequestMessage } from 'openai'
 import path from 'path'
 import fs from 'fs'
 import PROMPT_TEMPLATE from '../../../generated/prompt-template'
 import findController, { ComponentController } from './find-controller'
-
-export const CODE_START = '// ___NG2R_START___'
-export const CODE_END = '// ___NG2R_END___'
 
 export function buildGptMessage(component: AngularComponent, sourcesRoot: string | undefined) {
     const template = findTemplate(component)
@@ -19,13 +15,7 @@ export function buildGptMessage(component: AngularComponent, sourcesRoot: string
     const [code, language] = buildCode('component', component, sourcesRoot, template, controller)
 
     const prompt = PROMPT_TEMPLATE.replace('${LANGUAGE}', language).replace('${COMPONENT}', code)
-
-    return [
-        {
-            role: 'user',
-            content: prompt,
-        },
-    ] satisfies ChatCompletionRequestMessage[]
+    return { prompt }
 }
 
 function buildCode(
