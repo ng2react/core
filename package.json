@@ -1,62 +1,62 @@
 {
-    "name": "@ng2react/core",
-    "version": "1.2.0",
-    "description": "Convert AngularJS 1.x components to React components",
-    "main": "./dist/cjs/api/main.js",
-    "module": "./dist/esm/api/main.js",
-    "types": "./dist/types/api/main.d.ts",
-    "exports": {
-        "require": "./dist/cjs/api/main.js",
-        "import": "./dist/esm/api/main.js",
-        "types": "./dist/types/api/main.d.ts"
-    },
-    "imports": {
-        "#prompt-template.md": "./src/assets/prompt-template.md"
-    },
-    "files": [
-        "dist",
-        "src/lib/**/*.ts",
-        "assets"
-    ],
-    "scripts": {
-        "preversion": "npm run lint && npm run test && npm run build",
-        "prepublishOnly": "npm run build",
-        "prebuild": "rimraf dist && npm run bundleAssets",
-        "bundleAssets": "node ./src/assets/bundle.cjs",
-        "build": "npm run build-cjs && npm run build-esm",
-        "build-esm": "tsc --build ./src/lib/tsconfig.json",
-        "build-cjs": "tsc --build ./src/lib/tsconfig.cjs.json",
-        "test": "npm run bundleAssets && jest",
-        "lint": "eslint **/*.ts"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/maxbilbow/ng2react-core.git"
-    },
-    "author": "Max Bilbow",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/maxbilbow/ng2react-core/issues"
-    },
-    "homepage": "https://github.com/maxbilbow/ng2react-core#readme",
-    "dependencies": {
-        "lodash": "^4.17.21",
-        "openai": "^3.2.1",
-        "prettier": "^2.8.8",
-        "tslog": "^4.8.2",
-        "typescript": "^5.0.4"
-    },
-    "devDependencies": {
-        "@types/jest": "^29.5.1",
-        "@types/lodash": "^4.14.191",
-        "@types/node": "^18.14.6",
-        "@types/yargs": "^17.0.22",
-        "@typescript-eslint/eslint-plugin": "^5.57.0",
-        "@typescript-eslint/parser": "^5.57.0",
-        "cross-env": "^7.0.3",
-        "eslint": "^8.37.0",
-        "jest": "^29.5.0",
-        "rimraf": "^4.4.0",
-        "ts-jest": "^29.1.0"
-    }
+  "name": "@ng2react/core",
+  "version": "1.2.0",
+  "description": "Convert AngularJS 1.x components to React components",
+  "main": "./dist/cjs/api/main.js",
+  "module": "./dist/esm/api/main.js",
+  "types": "./dist/types/api/main.d.ts",
+  "exports": {
+    "require": "./dist/cjs/api/main.js",
+    "import": "./dist/esm/api/main.js",
+    "types": "./dist/types/api/main.d.ts"
+  },
+  "imports": {
+    "#prompt-template.md": "./src/assets/prompt-template.md"
+  },
+  "files": [
+    "dist",
+    "src/lib/**/*.ts",
+    "assets"
+  ],
+  "scripts": {
+    "preversion": "npm run lint && npm run test && npm run build",
+    "prepublishOnly": "npm run build",
+    "prebuild": "rimraf dist && npm run bundleAssets",
+    "bundleAssets": "node ./src/assets/bundle.cjs",
+    "build": "npm run build-cjs && npm run build-esm",
+    "build-esm": "tsc --build ./src/lib/tsconfig.json",
+    "build-cjs": "tsc --build ./src/lib/tsconfig.cjs.json",
+    "test": "npm run bundleAssets && jest",
+    "lint": "eslint **/*.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxbilbow/ng2react-core.git"
+  },
+  "author": "Max Bilbow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxbilbow/ng2react-core/issues"
+  },
+  "homepage": "https://github.com/maxbilbow/ng2react-core#readme",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "openai": "^3.2.1",
+    "prettier": "^2.8.8",
+    "tslog": "^4.8.2",
+    "typescript": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.1",
+    "@types/lodash": "^4.14.191",
+    "@types/node": "^18.14.6",
+    "@types/yargs": "^17.0.22",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.37.0",
+    "jest": "^29.5.0",
+    "rimraf": "^4.4.0",
+    "ts-jest": "^29.1.0"
+  }
 }

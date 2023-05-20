@@ -1,9 +1,0 @@
-services:
-    structurizr_lite:
-        image: structurizr/lite:latest
-        container_name: ng2r-structurizr-lite
-        restart: always
-        volumes:
-            - ./docs:/usr/local/structurizr
-        ports:
-            - 9000:8080
