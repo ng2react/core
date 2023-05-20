@@ -6,5 +6,5 @@
 **/.DS_Store
 /docs/build
 **/Thumbs.db
-**/.idea
+/.idea
 **/generated/**/*.ts
