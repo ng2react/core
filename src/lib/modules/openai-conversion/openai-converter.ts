@@ -3,6 +3,7 @@ import Ng2ReactConverter, { Ng2ReactConversionResult } from './Ng2ReactConverter
 import type { AngularComponent } from '../../model/AngularEntity'
 import { buildGptMessage } from './prompt-construction/gpt-prompt-builder'
 import processResponse from './process-response'
+import { REACT_TEST_PROMPT } from '../../generated/prompt-template'
 
 export type OpenAIOptions = {
     readonly apiKey: string
@@ -23,6 +24,8 @@ export type OpenAIOptions = {
      * Custom rules (Markdown) that will be used instead of the default rules regarding pattern conversion.
      */
     readonly customPrompt: string | undefined
+
+    readonly targetLanguage: 'typescript' | 'javascript' | undefined
 }
 
 // type Version = '1' | '2' | '3'
@@ -36,6 +39,7 @@ export function getConverter({
     sourceRoot,
     temperature,
     customPrompt,
+    targetLanguage,
 }: OpenAIOptions): Ng2ReactConverter {
     const configuration = new Configuration({
         apiKey,
@@ -51,7 +55,7 @@ export function getConverter({
     function gpt(model: Gpt) {
         return {
             convert: async (component: AngularComponent) => {
-                const { prompt } = buildGptMessage(component, { sourceRoot, customPrompt })
+                const { prompt } = buildGptMessage(component, { sourceRoot, customPrompt, targetLanguage })
                 const response = await openai.createChatCompletion({
                     model,
                     messages: [
@@ -72,8 +76,8 @@ export function getConverter({
             },
         } satisfies Ng2ReactConverter
     }
+}
 
-    function isGpt(model: Gpt): model is Gpt {
-        return model.startsWith('gpt-')
-    }
+export function isGpt(model: Gpt): model is Gpt {
+    return model.startsWith('gpt-')
 }

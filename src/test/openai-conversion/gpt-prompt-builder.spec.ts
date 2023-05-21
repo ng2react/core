@@ -30,7 +30,11 @@ describe('Given a source file that has a Typescript extension', () => {
     let prompt: string
     beforeAll(() => {
         component = mockComponent({ ex: 'ts' })
-        prompt = buildGptMessage(component, { sourceRoot: 'src', customPrompt: undefined }).prompt
+        prompt = buildGptMessage(component, {
+            sourceRoot: 'src',
+            customPrompt: undefined,
+            targetLanguage: undefined,
+        }).prompt
     })
     it('Then the prompt specifies Typescript should be generated', () => {
         expect(prompt).toContain('The output should be in Typescript')
@@ -42,9 +46,45 @@ describe('Given a source file that has a JavaScript extension', () => {
     let prompt: string
     beforeAll(() => {
         component = mockComponent({ ex: 'js' })
-        prompt = buildGptMessage(component, { sourceRoot: 'src', customPrompt: undefined }).prompt
+        prompt = buildGptMessage(component, {
+            sourceRoot: 'src',
+            customPrompt: undefined,
+            targetLanguage: undefined,
+        }).prompt
+    })
+    it('Then the prompt does not specify Typescript should be generated', () => {
+        expect(prompt).not.toContain('* Please use JavaScript')
+    })
+})
+
+describe('Given a source file that has a JavaScript extension But Typescript was given as the target', () => {
+    let component: AngularComponent
+    let prompt: string
+    beforeAll(() => {
+        component = mockComponent({ ex: 'js' })
+        prompt = buildGptMessage(component, {
+            sourceRoot: 'src',
+            customPrompt: undefined,
+            targetLanguage: 'typescript',
+        }).prompt
     })
     it('Then the prompt does not specify Typescript should be generated', () => {
         expect(prompt).not.toContain('* Please use TypeScript')
+    })
+})
+
+describe('Given a source file that has a Typescript extension But JavaScript was given as the target', () => {
+    let component: AngularComponent
+    let prompt: string
+    beforeAll(() => {
+        component = mockComponent({ ex: 'ts' })
+        prompt = buildGptMessage(component, {
+            sourceRoot: 'src',
+            customPrompt: undefined,
+            targetLanguage: 'javascript',
+        }).prompt
+    })
+    it('Then the prompt does not specify Typescript should be generated', () => {
+        expect(prompt).not.toContain('* Please use JavaScript')
     })
 })

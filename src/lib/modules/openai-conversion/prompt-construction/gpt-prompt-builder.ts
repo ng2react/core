@@ -15,9 +15,14 @@ type MessageOpts = {
      * Additional prompt text that can be used to add custom rules
      */
     readonly customPrompt: string | undefined
+
+    readonly targetLanguage: 'typescript' | 'javascript' | undefined
 }
 
-export function buildGptMessage(component: AngularComponent, { sourceRoot, customPrompt }: MessageOpts) {
+export function buildGptMessage(
+    component: AngularComponent,
+    { sourceRoot, customPrompt, targetLanguage }: MessageOpts
+) {
     const template = findTemplate(component)
     const controller = findController(component)
 
@@ -26,7 +31,7 @@ export function buildGptMessage(component: AngularComponent, { sourceRoot, custo
     const [code, language] = buildCode('component', component, sourceRoot, template, controller)
 
     const prompt = [
-        PROMPT_BASE.replace('${LANGUAGE}', language),
+        PROMPT_BASE.replace('${LANGUAGE}', targetLanguage ?? language),
         customPrompt ?? PROMPT_PATTERNS,
         'The AngularJS Component:',
         '========================',

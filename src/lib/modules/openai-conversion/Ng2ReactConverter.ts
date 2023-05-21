@@ -10,3 +10,7 @@ export type Ng2ReactConversionResult = {
 export default interface Ng2ReactConverter {
     convert: (component: AngularComponent) => Promise<Ng2ReactConversionResult>
 }
+
+export interface ReactTestGenerator {
+    generateTest: (reactFileContent: string) => Promise<Ng2ReactConversionResult>
+}

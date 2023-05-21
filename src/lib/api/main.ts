@@ -3,6 +3,7 @@ import findComponentsInNode from '../modules/parsing/find-components-in-node'
 import { AngularComponent } from '../model/AngularEntity'
 import { getConverter, OpenAIOptions } from '../modules/openai-conversion/openai-converter'
 import { PROMPT_PATTERNS } from '../generated/prompt-template'
+import { getReactTestGenerator, ReactTestOptions } from '../modules/openai-conversion/react-test-gen'
 
 export { setLogLevel } from '../Logger'
 
@@ -18,6 +19,8 @@ type NgComponentOptions = {
 }
 
 export type ConvertOptions = NgComponentOptions & OpenAIOptions
+
+export type TestOptions = Omit<OpenAIOptions, 'sourceRoot' | 'customPrompt'>
 
 /**
  * Find all components in a file.
@@ -35,6 +38,11 @@ export function convert(fileContent: string, { file, componentName, ...config }:
     }
     const converter = getConverter(config)
     return converter.convert(component)
+}
+
+export function generateReactTest(fileContent: string, config: ReactTestOptions) {
+    const converter = getReactTestGenerator(config)
+    return converter.generateTest(fileContent)
 }
 
 /**
