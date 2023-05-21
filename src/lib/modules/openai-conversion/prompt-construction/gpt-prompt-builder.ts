@@ -3,18 +3,36 @@ import findTemplate, { AngularTemplate } from './find-template'
 import resolveTemplateUrl from './resolve-template-url'
 import path from 'path'
 import fs from 'fs'
-import PROMPT_TEMPLATE from '../../../generated/prompt-template'
+import { PROMPT_PATTERNS, PROMPT_BASE } from '../../../generated/prompt-template'
 import findController, { ComponentController } from './find-controller'
 
-export function buildGptMessage(component: AngularComponent, sourcesRoot: string | undefined) {
+type MessageOpts = {
+    /**
+     * Location of AngularJS sources
+     */
+    readonly sourceRoot: string | undefined
+    /**
+     * Additional prompt text that can be used to add custom rules
+     */
+    readonly customPrompt: string | undefined
+}
+
+export function buildGptMessage(component: AngularComponent, { sourceRoot, customPrompt }: MessageOpts) {
     const template = findTemplate(component)
     const controller = findController(component)
 
-    sourcesRoot ??= findNearestDirToPackageJson(component.node.getSourceFile().fileName)
+    sourceRoot ??= findNearestDirToPackageJson(component.node.getSourceFile().fileName)
 
-    const [code, language] = buildCode('component', component, sourcesRoot, template, controller)
+    const [code, language] = buildCode('component', component, sourceRoot, template, controller)
 
-    const prompt = PROMPT_TEMPLATE.replace('${LANGUAGE}', language).replace('${COMPONENT}', code)
+    const prompt = [
+        PROMPT_BASE.replace('${LANGUAGE}', language),
+        customPrompt ?? PROMPT_PATTERNS,
+        'The AngularJS Component:',
+        '========================',
+        code,
+    ].join('\n')
+
     return { prompt }
 }
 
@@ -49,10 +67,6 @@ function buildCode(
     }
 
     return [componentPrompt.join('\n'), language] as const
-}
-
-export function buildCompletionPrompt(component: AngularComponent, sourcesRoot: string | undefined): string {
-    return `#AngularJS to React:\nAngularJS:\n${component.node.getText()}\nReact:\n`
 }
 
 function findNearestDirToPackageJson(filename: string) {

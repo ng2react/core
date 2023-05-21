@@ -2,6 +2,7 @@ import createAst from '../modules/parsing/create-ast'
 import findComponentsInNode from '../modules/parsing/find-components-in-node'
 import { AngularComponent } from '../model/AngularEntity'
 import { getConverter, OpenAIOptions } from '../modules/openai-conversion/openai-converter'
+import { PROMPT_PATTERNS } from '../generated/prompt-template'
 
 export { setLogLevel } from '../Logger'
 
@@ -34,4 +35,11 @@ export function convert(fileContent: string, { file, componentName, ...config }:
     }
     const converter = getConverter(config)
     return converter.convert(component)
+}
+
+/**
+ * Get the default prompt that is used to convert AngularJS components.
+ */
+export function getDefaultRules() {
+    return PROMPT_PATTERNS
 }

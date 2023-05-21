@@ -1,61 +1,14 @@
-I want you to convert an AngularJS component into a functional React component.
-
-## Code presentation:
-- So that I can programmatically find your code, please top and tail it with `// ___NG2R_START___`
-  and `// ___NG2R_END___`,
-- The output should be in ${LANGUAGE}
-- Annotations:
-  - Add inline comments explaining assumptions you have made
-  - Add inline comments highlighting potential issues
-- For assumptions/issues that are more general, you may add these outside of the code snippet
-
-### Example Input
-```javascript
-angularjs.module("myApp", [])
-    .component("myComponent", {
-      template: '<div><h1>Title: {{myProp}}</h1><ng-transclude/></div>',
-      bindings: {
-          myProp: "<",
-          transclude: true
-      }
-    })
-```
-
-### Example Response
-
-**Potential Issues:**
-- The AngularJS component uses the transclude functionality. While it is possible to recreate this in react,
-it is important to note that you will not be able to insert working AngularJS code inside a React component.
-
-```jsx
-// ___NG2R_START___
-
-import React from 'react'
-
-// Assumption: Since myProp is a 1-way binding, I am assuming its state is managed by the parent
-const MyComponent = ({myProp, children}) => {
-    return (
-        <div>
-            <h1>Title: {myProp}</h1>
-          {children}
-        </div>
-    )
-}
-
-// ___NG2R_END___
-```
-
-## Code Patterns
-
+Code Patterns
+=============
 I want you to deal with certain code patterns in a specific way. Here are the patterns I want you to deal with:
 
-### Pattern 1: Two-way bindings
+## Pattern 1: Two-way bindings
 
 - Assume that state is managed by the parent component
 - Assume that the parent component will pass down a callback function to update the state
 - Do not use `useState` to manage state locally
 
-#### Example Response:
+### Example Response:
 
 ```jsx
 const StateBindingExample = ({twoWayBinding, onTwoWayBindingChange}) => {
@@ -73,13 +26,13 @@ const StateBindingExample = ({twoWayBinding, onTwoWayBindingChange}) => {
 }
 ```
 
-### Pattern 2: One-way bindings / String Bindings
+## Pattern 2: One-way bindings / String Bindings
 
 - If the value does not appear to be modified, assume that it is read-only; otherwise
 - Create a local state variable using `useState` and update it using `useEffect` declaring the initial state as a
   dependency
 
-#### Example Response:
+### Example Response:
 
 ```jsx
 const StateBindingExample = ({oneWayBinding: initialOneWayBinding, readOnlyOneWayBinding}) => {
@@ -111,14 +64,14 @@ const StateBindingExample = ({oneWayBinding: initialOneWayBinding, readOnlyOneWa
 }
 ```
 
-### Pattern 3: Service Injection
+## Pattern 3: Service Injection
 
 - If the service name starts with a `$`:
     - Assume that it is a built-in AngularJS service
     - Assume that a non-angular equivalent is available
 - Use a custom hook called `useService` to inject the service
 
-#### Example Response
+### Example Response
 - I have assumed that a custom hook called `useService` is available
 - It is a bad idea to import AngularJS services directly into React so I have assumed that a wrapper for `$http` called `httpService` will be available
 
@@ -132,11 +85,11 @@ const ServiceInjectionExample = ({}) => {
 }
 ```
 
-### Pattern 4: Require Controller
+## Pattern 4: Require Controller
 
 Where a controller is required, assume that it can be passed in as a prop.
 
-**Example:**
+### Example Response
 
 ```javascript
 angular.module('myApp').component('myComponent', {
@@ -151,11 +104,7 @@ const RequireControllerExample = ({myController}) => {
 }
 ```
 
-### Any other patterns
+## Any other patterns
 Finally: 
 - If you encounter any other patterns, not described above, please do your best to migrate them into the React component.
 - If a particular pattern seems unworkable, just do your best and include comments explaining your concerns.
-
-## The AngularJS Component:
-
-${COMPONENT}

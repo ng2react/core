@@ -18,6 +18,11 @@ export type OpenAIOptions = {
      * nearest package.json file will be used.
      */
     readonly sourceRoot: string | undefined
+
+    /**
+     * Custom rules (Markdown) that will be used instead of the default rules regarding pattern conversion.
+     */
+    readonly customPrompt: string | undefined
 }
 
 // type Version = '1' | '2' | '3'
@@ -30,6 +35,7 @@ export function getConverter({
     model,
     sourceRoot,
     temperature,
+    customPrompt,
 }: OpenAIOptions): Ng2ReactConverter {
     const configuration = new Configuration({
         apiKey,
@@ -45,7 +51,7 @@ export function getConverter({
     function gpt(model: Gpt) {
         return {
             convert: async (component: AngularComponent) => {
-                const { prompt } = buildGptMessage(component, sourceRoot)
+                const { prompt } = buildGptMessage(component, { sourceRoot, customPrompt })
                 const response = await openai.createChatCompletion({
                     model,
                     messages: [
