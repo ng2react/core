@@ -34,7 +34,9 @@ describe('Given a source file that has a Typescript extension', () => {
             sourceRoot: 'src',
             customPrompt: undefined,
             targetLanguage: undefined,
-        }).prompt
+        })
+            .map((m) => m.content)
+            .join('\n')
     })
     it('Then the prompt specifies Typescript should be generated', () => {
         expect(prompt).toContain('The output should be in Typescript')
@@ -50,7 +52,9 @@ describe('Given a source file that has a JavaScript extension', () => {
             sourceRoot: 'src',
             customPrompt: undefined,
             targetLanguage: undefined,
-        }).prompt
+        })
+            .map((m) => m.content)
+            .join('\n')
     })
     it('Then the prompt does not specify Typescript should be generated', () => {
         expect(prompt).not.toContain('* Please use JavaScript')
@@ -66,7 +70,9 @@ describe('Given a source file that has a JavaScript extension But Typescript was
             sourceRoot: 'src',
             customPrompt: undefined,
             targetLanguage: 'typescript',
-        }).prompt
+        })
+            .map((m) => m.content)
+            .join('\n')
     })
     it('Then the prompt does not specify Typescript should be generated', () => {
         expect(prompt).not.toContain('* Please use TypeScript')
@@ -82,7 +88,9 @@ describe('Given a source file that has a Typescript extension But JavaScript was
             sourceRoot: 'src',
             customPrompt: undefined,
             targetLanguage: 'javascript',
-        }).prompt
+        })
+            .map((m) => m.content)
+            .join('\n')
     })
     it('Then the prompt does not specify Typescript should be generated', () => {
         expect(prompt).not.toContain('* Please use JavaScript')

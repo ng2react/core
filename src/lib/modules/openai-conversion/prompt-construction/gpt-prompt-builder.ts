@@ -5,6 +5,7 @@ import path from 'path'
 import fs from 'fs'
 import { PROMPT_PATTERNS, PROMPT_BASE } from '../../../generated/prompt-template'
 import findController, { ComponentController } from './find-controller'
+import { ChatCompletionRequestMessage } from 'openai/dist/api'
 
 type MessageOpts = {
     /**
@@ -30,15 +31,20 @@ export function buildGptMessage(
 
     const [code, language] = buildCode('component', component, sourceRoot, template, controller)
 
-    const prompt = [
-        PROMPT_BASE.replace('${LANGUAGE}', targetLanguage ?? language),
-        customPrompt ?? PROMPT_PATTERNS,
-        'The AngularJS Component:',
-        '========================',
-        code,
-    ].join('\n')
-
-    return { prompt }
+    return [
+        {
+            role: 'user',
+            content: PROMPT_BASE.replace('${LANGUAGE}', targetLanguage ?? language),
+        },
+        {
+            role: 'user',
+            content: customPrompt ?? PROMPT_PATTERNS,
+        },
+        {
+            role: 'user',
+            content: code,
+        },
+    ] satisfies ChatCompletionRequestMessage[]
 }
 
 function buildCode(

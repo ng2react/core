@@ -1,9 +1,8 @@
-import { Configuration, OpenAIApi } from 'openai'
+import { ChatCompletionResponseMessage, Configuration, OpenAIApi } from 'openai'
 import Ng2ReactConverter, { Ng2ReactConversionResult } from './Ng2ReactConverter'
 import type { AngularComponent } from '../../model/AngularEntity'
 import { buildGptMessage } from './prompt-construction/gpt-prompt-builder'
 import processResponse from './process-response'
-import { REACT_TEST_PROMPT } from '../../generated/prompt-template'
 
 export type OpenAIOptions = {
     readonly apiKey: string
@@ -55,22 +54,18 @@ export function getConverter({
     function gpt(model: Gpt) {
         return {
             convert: async (component: AngularComponent) => {
-                const { prompt } = buildGptMessage(component, { sourceRoot, customPrompt, targetLanguage })
+                const messages = buildGptMessage(component, { sourceRoot, customPrompt, targetLanguage })
                 const response = await openai.createChatCompletion({
                     model,
-                    messages: [
-                        {
-                            role: 'user',
-                            content: prompt,
-                        },
-                    ],
+                    messages,
                     temperature,
+                    stream: true,
                 })
                 const results = response.data.choices
                     .map((c) => c.message?.content)
                     .filter((m) => m !== undefined) as string[]
                 return {
-                    prompt,
+                    prompt: messages.map((m) => m.content).join('\n\n'),
                     results: results.map(processResponse),
                 } satisfies Ng2ReactConversionResult
             },
