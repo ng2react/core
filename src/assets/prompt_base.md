@@ -1,7 +1,6 @@
 I want you to convert an AngularJS component into a functional React component.
 
-Code presentation:
-==================
+# Response presentation:
 - So that I can programmatically find your code, please top and tail it with `// ___NG2R_START___`
   and `// ___NG2R_END___`,
 - The output should be in ${LANGUAGE}
@@ -37,7 +36,7 @@ angularjs.module("myApp", [])
 - The AngularJS component uses the transclude functionality. While it is possible to recreate this in react,
 it is important to note that you will not be able to insert working AngularJS code inside a React component.
 
-```jsx
+```${JSX_TYPE}
 // ___NG2R_START___
 import React from 'react'
 

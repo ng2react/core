@@ -29,12 +29,14 @@ export function buildGptMessage(
 
     sourceRoot ??= findNearestDirToPackageJson(component.node.getSourceFile().fileName)
 
-    const [code, language] = buildCode('component', component, sourceRoot, template, controller)
+    const [code, sourceLanguage] = buildCode('component', component, sourceRoot, template, controller)
 
+    const LANGUAGE = (targetLanguage ?? sourceLanguage) === 'typescript' ? 'Typescript' : 'JavaScript'
+    const JSX_TYPE = LANGUAGE === 'Typescript' ? 'tsx' : 'jsx'
     return [
         {
             role: 'user',
-            content: PROMPT_BASE.replace('${LANGUAGE}', targetLanguage ?? language),
+            content: PROMPT_BASE.replace('${LANGUAGE}', LANGUAGE).replace('${JSX_TYPE}', JSX_TYPE),
         },
         {
             role: 'user',
@@ -54,7 +56,7 @@ function buildCode(
     template: AngularTemplate,
     controller: ComponentController
 ) {
-    const language = component.node.getSourceFile().fileName.endsWith('.ts') ? 'Typescript' : 'JavaScript'
+    const language = component.node.getSourceFile().fileName.endsWith('.ts') ? 'typescript' : 'javascript'
     const componentPrompt = [
         'Here is the AngularJS component:',
         `\`\`\`${language.toLowerCase()}`,

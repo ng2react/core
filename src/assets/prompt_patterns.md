@@ -1,5 +1,5 @@
-Code Patterns
-=============
+# Code Patterns
+
 I want you to deal with certain code patterns in a specific way. Here are the patterns I want you to deal with:
 
 ## Pattern 1: Two-way bindings
@@ -69,10 +69,11 @@ const StateBindingExample = ({oneWayBinding: initialOneWayBinding, readOnlyOneWa
 - If the service name starts with a `$`:
     - Assume that it is a built-in AngularJS service
     - Assume that a non-angular equivalent is available
-- Use a custom hook called `useService` to inject the service
+- Use a custom hook called `useService` to inject the services. This hook will be provided by a library called
+  `@ng2react/support`
 
 ### Example Response
-- I have assumed that a custom hook called `useService` is available
+- I have assumed that a custom hook called `useService` is available via a library called `@ng2react/support`
 - It is a bad idea to import AngularJS services directly into React so I have assumed that a wrapper for `$http` called `httpService` will be available
 
 ```jsx
