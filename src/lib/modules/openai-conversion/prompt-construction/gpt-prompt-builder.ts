@@ -31,22 +31,28 @@ export function buildGptMessage(
 
     const [code, sourceLanguage] = buildCode('component', component, sourceRoot, template, controller)
 
-    const LANGUAGE = (targetLanguage ?? sourceLanguage) === 'typescript' ? 'Typescript' : 'JavaScript'
-    const JSX_TYPE = LANGUAGE === 'Typescript' ? 'tsx' : 'jsx'
+    const language = (targetLanguage ?? sourceLanguage) === 'typescript' ? 'Typescript' : 'JavaScript'
     return [
         {
             role: 'user',
-            content: PROMPT_BASE.replace('${LANGUAGE}', LANGUAGE).replace('${JSX_TYPE}', JSX_TYPE),
+            content: preparePrompt(PROMPT_BASE.replace('${LANGUAGE}', language), { language }),
         },
         {
             role: 'user',
-            content: customPrompt ?? PROMPT_PATTERNS,
+            content: preparePrompt(customPrompt ?? PROMPT_PATTERNS, { language }),
         },
         {
             role: 'user',
             content: code,
         },
     ] satisfies ChatCompletionRequestMessage[]
+}
+
+function preparePrompt(prompt: string, { language }: { language: 'JavaScript' | 'Typescript' }) {
+    if (language === 'JavaScript') {
+        return prompt
+    }
+    return prompt.replaceAll('```jsx', '```tsx')
 }
 
 function buildCode(

@@ -36,7 +36,7 @@ angularjs.module("myApp", [])
 - The AngularJS component uses the transclude functionality. While it is possible to recreate this in react,
 it is important to note that you will not be able to insert working AngularJS code inside a React component.
 
-```${JSX_TYPE}
+```jsx
 // ___NG2R_START___
 import React from 'react'
 
