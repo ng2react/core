@@ -59,7 +59,6 @@ export function getConverter({
                     model,
                     messages,
                     temperature,
-                    stream: true,
                 })
                 const results = response.data.choices
                     .map((c) => c.message?.content)
