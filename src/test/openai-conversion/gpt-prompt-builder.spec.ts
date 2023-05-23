@@ -39,7 +39,12 @@ describe('Given a source file that has a Typescript extension', () => {
             .join('\n')
     })
     it('Then the prompt specifies Typescript should be generated', () => {
-        expect(prompt).toContain('The output should be in Typescript')
+        expect(prompt).toContain('- Your code should be written in Typescript')
+    })
+
+    it('Then the prompt should contain tsx examples', () => {
+        expect(prompt).toContain('```tsx')
+        expect(prompt).not.toContain('```jsx')
     })
 })
 
@@ -57,7 +62,12 @@ describe('Given a source file that has a JavaScript extension', () => {
             .join('\n')
     })
     it('Then the prompt does not specify Typescript should be generated', () => {
-        expect(prompt).not.toContain('* Please use JavaScript')
+        expect(prompt).toContain('- Your code should be written in JavaScript')
+    })
+
+    it('Then the prompt should contain tsx examples', () => {
+        expect(prompt).toContain('```jsx')
+        expect(prompt).not.toContain('```tsx')
     })
 })
 
@@ -75,7 +85,12 @@ describe('Given a source file that has a JavaScript extension But Typescript was
             .join('\n')
     })
     it('Then the prompt does not specify Typescript should be generated', () => {
-        expect(prompt).not.toContain('* Please use TypeScript')
+        expect(prompt).toContain('- Your code should be written in Typescript')
+    })
+
+    it('Then the prompt should contain tsx examples', () => {
+        expect(prompt).toContain('```tsx')
+        expect(prompt).not.toContain('```jsx')
     })
 })
 
@@ -92,7 +107,13 @@ describe('Given a source file that has a Typescript extension But JavaScript was
             .map((m) => m.content)
             .join('\n')
     })
+
     it('Then the prompt does not specify Typescript should be generated', () => {
-        expect(prompt).not.toContain('* Please use JavaScript')
+        expect(prompt).toContain('- Your code should be written in JavaScript')
+    })
+
+    it('Then the prompt should contain tsx examples', () => {
+        expect(prompt).toContain('```jsx')
+        expect(prompt).not.toContain('```tsx')
     })
 })

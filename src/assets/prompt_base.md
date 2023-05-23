@@ -1,13 +1,13 @@
 I want you to convert an AngularJS component into a functional React component.
 
 # Response presentation:
-- So that I can programmatically find your code, please top and tail it with `// ___NG2R_START___`
-  and `// ___NG2R_END___`,
-- The output should be in ${LANGUAGE}
-- For assumptions/issues that are more general, you may add these outside of the code snippet
 - Above the code:
   - explain the approach you have taken to solve the problem
   - list any assumptions you have made
+- The code:
+  - So that I can programmatically find your code, please top and tail it with `// ___NG2R_START___`
+  and `// ___NG2R_END___`,
+  - Your code should be written in ${LANGUAGE}
 - Below the code:
   - list any potential issues you have identified
 
