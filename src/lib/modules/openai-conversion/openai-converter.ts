@@ -1,4 +1,4 @@
-import { ChatCompletionResponseMessage, Configuration, OpenAIApi } from 'openai'
+import { Configuration, OpenAIApi } from 'openai'
 import Ng2ReactConverter, { Ng2ReactConversionResult } from './Ng2ReactConverter'
 import type { AngularComponent } from '../../model/AngularEntity'
 import { buildGptMessage } from './prompt-construction/gpt-prompt-builder'
