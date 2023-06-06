@@ -27,8 +27,6 @@ export type OpenAIOptions = {
     readonly targetLanguage: 'typescript' | 'javascript' | undefined
 }
 
-// type Version = '1' | '2' | '3'
-// type Completion = `text-${'davinci' | 'curie' | 'babbage' | 'ada'}-00${Version}`
 type Gpt = `gpt-${'3-turbo' | '4'}`
 
 export function getConverter({

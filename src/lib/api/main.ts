@@ -4,6 +4,7 @@ import { AngularComponent } from '../model/AngularEntity'
 import { getConverter, OpenAIOptions } from '../modules/openai-conversion/openai-converter'
 import { PROMPT_PATTERNS } from '../generated/prompt-template'
 import { getReactTestGenerator, ReactTestOptions } from '../modules/openai-conversion/react-test-gen'
+import testConnection, { ConnectionTestOptions } from '../modules/openai-conversion/test-connection'
 
 export { setLogLevel } from '../Logger'
 
@@ -20,7 +21,20 @@ type NgComponentOptions = {
 
 export type ConvertOptions = NgComponentOptions & OpenAIOptions
 
-export type TestOptions = Omit<OpenAIOptions, 'sourceRoot' | 'customPrompt'>
+/**
+ * Verify that the connection to OpenAI works.
+ * @return The response from OpenAI: "This is a test!" (unless the AI is feeling salty)
+ * @throws If the connection fails.
+ */
+export function checkConnection({
+    apiKey,
+    model = 'gpt-3-turbo',
+}: {
+    apiKey: string
+    model?: ConnectionTestOptions['model']
+}) {
+    return testConnection({ apiKey, model })
+}
 
 /**
  * Find all components in a file.
