@@ -1,6 +1,6 @@
 {
   "name": "@ng2react/core",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Convert AngularJS 1.x components to React components",
   "main": "./dist/cjs/api/main.js",
   "module": "./dist/esm/api/main.js",
