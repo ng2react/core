@@ -27,7 +27,7 @@ export type OpenAIOptions = {
     readonly targetLanguage: 'typescript' | 'javascript' | undefined
 }
 
-type Gpt = `gpt-${'3-turbo' | '4'}`
+type Gpt = `gpt-${'3.5-turbo' | '4'}`
 
 export function getConverter({
     apiKey,

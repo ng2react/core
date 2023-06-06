@@ -28,7 +28,7 @@ export type ConvertOptions = NgComponentOptions & OpenAIOptions
  */
 export function checkConnection({
     apiKey,
-    model = 'gpt-3-turbo',
+    model = 'gpt-3.5-turbo',
 }: {
     apiKey: string
     model?: ConnectionTestOptions['model']
