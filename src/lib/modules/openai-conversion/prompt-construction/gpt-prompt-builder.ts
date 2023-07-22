@@ -32,10 +32,19 @@ export function buildGptMessage(
     const [code, sourceLanguage] = buildCode('component', component, sourceRoot, template, controller)
 
     const language = (targetLanguage ?? sourceLanguage) === 'typescript' ? 'Typescript' : 'JavaScript'
+    const additionalCodeInstructions =
+        language === 'Typescript' ? '\n  - If props are used, please define the props type' : ''
+
     return [
         {
             role: 'user',
-            content: preparePrompt(PROMPT_BASE.replace('${LANGUAGE}', language), { language }),
+            content: preparePrompt(
+                PROMPT_BASE.replace('${LANGUAGE}', language).replace(
+                    '${ADDITIONA_CODE_INSTRUCTIONS}',
+                    additionalCodeInstructions
+                ),
+                { language }
+            ),
         },
         {
             role: 'user',

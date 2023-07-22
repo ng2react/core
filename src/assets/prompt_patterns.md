@@ -24,6 +24,7 @@ const StateBindingExample = ({twoWayBinding, onTwoWayBindingChange}) => {
         </div>
     )
 }
+export default StateBindingExample
 ```
 
 ## Pattern 2: One-way bindings / String Bindings
@@ -62,6 +63,7 @@ const StateBindingExample = ({oneWayBinding: initialOneWayBinding, readOnlyOneWa
         </div>
     )
 }
+export default StateBindingExample
 ```
 
 ## Pattern 3: Service Injection
@@ -84,6 +86,7 @@ const ServiceInjectionExample = ({}) => {
 
     return <>...</>
 }
+export default ServiceInjectionExample
 ```
 
 ## Pattern 4: Require Controller
@@ -103,6 +106,7 @@ angular.module('myApp').component('myComponent', {
 const RequireControllerExample = ({myController}) => {
     return <>...</>
 }
+export default RequireControllerExample
 ```
 
 ## Any other patterns

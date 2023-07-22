@@ -7,7 +7,7 @@ I want you to convert an AngularJS component into a functional React component.
 - The code:
   - So that I can programmatically find your code, please top and tail it with `// ___NG2R_START___`
   and `// ___NG2R_END___`,
-  - Your code should be written in ${LANGUAGE}
+  - Your code should be written in ${LANGUAGE}${ADDITIONA_CODE_INSTRUCTIONS}
 - Below the code:
   - list any potential issues you have identified
 
@@ -48,6 +48,8 @@ const MyComponent = ({myProp, children}) => {
         </div>
     )
 }
+
+export default MyComponent
 
 // ___NG2R_END___
 ```
