@@ -10,8 +10,12 @@ I want you to deal with certain code patterns in a specific way. Here are the pa
 
 ### Example Response:
 
-```jsx
-const StateBindingExample = ({twoWayBinding, onTwoWayBindingChange}) => {
+```tsx
+type Props = {
+    twoWayBinding: boolean
+    onTwoWayBindingChange: (newValue: boolean) => void
+}
+const StateBindingExample = ({twoWayBinding, onTwoWayBindingChange}: Props) => {
     const handleTwoWayBindingChange = (e) => {
         onTwoWayBindingChange(e.target.checked)
     }

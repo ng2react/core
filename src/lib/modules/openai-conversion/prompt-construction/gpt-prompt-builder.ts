@@ -33,7 +33,7 @@ export function buildGptMessage(
 
     const language = (targetLanguage ?? sourceLanguage) === 'typescript' ? 'Typescript' : 'JavaScript'
     const additionalCodeInstructions =
-        language === 'Typescript' ? '\n  - If props are used, please define the props type' : ''
+        language === 'Typescript' ? '\n  - If props are used, please define the prop types' : ''
 
     return [
         {

@@ -65,9 +65,9 @@ describe('Given a source file that has a JavaScript extension', () => {
         expect(prompt).toContain('- Your code should be written in JavaScript')
     })
 
-    it('Then the prompt should contain tsx examples', () => {
+    it('Then the prompt should contain tsx and jsx examples', () => {
         expect(prompt).toContain('```jsx')
-        expect(prompt).not.toContain('```tsx')
+        expect(prompt).toContain('```tsx')
     })
 })
 
@@ -112,8 +112,8 @@ describe('Given a source file that has a Typescript extension But JavaScript was
         expect(prompt).toContain('- Your code should be written in JavaScript')
     })
 
-    it('Then the prompt should contain tsx examples', () => {
+    it('Then the prompt should contain tsx and jsx examples', () => {
         expect(prompt).toContain('```jsx')
-        expect(prompt).not.toContain('```tsx')
+        expect(prompt).toContain('```tsx')
     })
 })
