@@ -10,8 +10,12 @@ I want you to deal with certain code patterns in a specific way. Here are the pa
 
 ### Example Response:
 
-```jsx
-const StateBindingExample = ({twoWayBinding, onTwoWayBindingChange}) => {
+```tsx
+type Props = {
+    twoWayBinding: boolean
+    onTwoWayBindingChange: (newValue: boolean) => void
+}
+const StateBindingExample = ({twoWayBinding, onTwoWayBindingChange}: Props) => {
     const handleTwoWayBindingChange = (e) => {
         onTwoWayBindingChange(e.target.checked)
     }
@@ -24,6 +28,7 @@ const StateBindingExample = ({twoWayBinding, onTwoWayBindingChange}) => {
         </div>
     )
 }
+export default StateBindingExample
 ```
 
 ## Pattern 2: One-way bindings / String Bindings
@@ -62,6 +67,7 @@ const StateBindingExample = ({oneWayBinding: initialOneWayBinding, readOnlyOneWa
         </div>
     )
 }
+export default StateBindingExample
 ```
 
 ## Pattern 3: Service Injection
@@ -84,6 +90,7 @@ const ServiceInjectionExample = ({}) => {
 
     return <>...</>
 }
+export default ServiceInjectionExample
 ```
 
 ## Pattern 4: Require Controller
@@ -103,6 +110,7 @@ angular.module('myApp').component('myComponent', {
 const RequireControllerExample = ({myController}) => {
     return <>...</>
 }
+export default RequireControllerExample
 ```
 
 ## Any other patterns
