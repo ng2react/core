@@ -93,26 +93,6 @@ const ServiceInjectionExample = ({}) => {
 export default ServiceInjectionExample
 ```
 
-## Pattern 4: Require Controller
-
-Where a controller is required, assume that it can be passed in as a prop.
-
-### Example Response
-
-```javascript
-angular.module('myApp').component('myComponent', {
-    require: '^MyController',
-    template: '<div>...</div>',
-})
-```
-
-```jsx
-const RequireControllerExample = ({myController}) => {
-    return <>...</>
-}
-export default RequireControllerExample
-```
-
 ## Any other patterns
 Finally: 
 - If you encounter any other patterns, not described above, please do your best to migrate them into the React component.
